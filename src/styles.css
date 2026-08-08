@@ -469,6 +469,231 @@ main {
   position: relative;
   z-index: 2;
 }
+.monitor-experience {
+  --monitor-progress: 0;
+  position: relative;
+  height: 220vh;
+  background: #f4f4f1;
+}
+.monitor-loading {
+  height: 220vh;
+  background: #f4f4f1;
+}
+.monitor-sticky {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 100svh;
+  overflow: hidden;
+  background: radial-gradient(
+    circle at 50% 42%,
+    #fff 0,
+    #f3f3f0 52%,
+    #e9e9e5 100%
+  );
+}
+.monitor-experience.is-past .monitor-sticky {
+  visibility: hidden;
+  pointer-events: none;
+}
+.monitor-canvas {
+  position: absolute;
+  inset: 0;
+  opacity: var(--monitor-scene-opacity, 1);
+  transform: scale(calc(1 + var(--monitor-progress) * 0.015));
+  transition: opacity 0.08s linear;
+}
+.monitor-real-hero {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  opacity: var(--monitor-dom-opacity, 0);
+  pointer-events: auto;
+  background: #f4f4f1;
+}
+.monitor-real-hero .hero {
+  height: 100%;
+  min-height: 100%;
+}
+.monitor-instruction {
+  position: absolute;
+  left: 50%;
+  bottom: 26px;
+  z-index: 5;
+  display: grid;
+  place-items: center;
+  gap: 9px;
+  color: #333;
+  font: 500 8px DM Mono;
+  letter-spacing: 0.18em;
+  opacity: var(--monitor-hint-opacity, 1);
+}
+.monitor-instruction i {
+  width: 1px;
+  height: 34px;
+  background: #222;
+  animation: cue 1.6s infinite;
+}
+.monitor-preview {
+  position: relative;
+  width: 800px;
+  height: 405px;
+  overflow: hidden;
+  color: #111;
+  background:
+    linear-gradient(rgba(0, 0, 0, 0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.025) 1px, transparent 1px), #fafaf8;
+  background-size: 40px 40px;
+  font-family: Manrope, sans-serif;
+  box-shadow: inset 0 0 45px rgba(0, 0, 0, 0.035);
+}
+.monitor-preview-nav {
+  position: absolute;
+  top: 25px;
+  left: 30px;
+  right: 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font: 600 8px DM Mono;
+}
+.monitor-preview-nav b {
+  font-size: 13px;
+}
+.monitor-preview-copy {
+  position: absolute;
+  left: 80px;
+  right: 80px;
+  top: 90px;
+  width: auto;
+  text-align: center;
+}
+.monitor-preview-copy small {
+  display: block;
+  margin-bottom: 15px;
+  color: #555;
+  font: 500 8px DM Mono;
+  letter-spacing: 0.12em;
+}
+.monitor-preview-copy > strong {
+  display: block;
+  max-width: 620px;
+  margin: auto;
+  font-size: 47px;
+  line-height: 0.92;
+  letter-spacing: -0.06em;
+}
+.monitor-preview-copy p {
+  width: 440px;
+  margin: 18px auto;
+  color: #666;
+  font-size: 10px;
+  line-height: 1.5;
+}
+.monitor-preview-copy div {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+.monitor-preview-copy div > * {
+  padding: 9px 12px;
+  border: 1px solid #bbb;
+  border-radius: 16px;
+  font: 600 7px DM Mono;
+}
+.monitor-preview-copy div b {
+  color: #fff;
+  background: #111;
+  border-color: #111;
+}
+.monitor-preview-art {
+  position: absolute;
+  right: 75px;
+  top: 95px;
+  width: 210px;
+  height: 210px;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  transform: rotate(30deg) skew(-5deg);
+}
+.monitor-preview-art::before,
+.monitor-preview-art::after,
+.monitor-preview-art i {
+  content: "";
+  position: absolute;
+  inset: 22px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+.monitor-preview-art::after {
+  inset: 48px;
+}
+.monitor-preview-art i:nth-child(1) {
+  inset: 74px;
+  background: rgba(0, 0, 0, 0.04);
+}
+.monitor-preview-art i:nth-child(2) {
+  left: 50%;
+  top: -35px;
+  bottom: -35px;
+  width: 1px;
+  border: 0;
+  background: rgba(0, 0, 0, 0.08);
+}
+.monitor-preview-art i:nth-child(3) {
+  top: 50%;
+  left: -35px;
+  right: -35px;
+  height: 1px;
+  border: 0;
+  background: rgba(0, 0, 0, 0.08);
+}
+.monitor-experience + .content-section {
+  margin-top: 0;
+}
+.monitor-experience ~ .timeline-rail,
+.timeline-rail {
+  top: 220vh;
+}
+html[data-theme="dark"] .monitor-sticky,
+html[data-theme="dark"] .monitor-real-hero {
+  background: #050505;
+}
+html[data-theme="dark"] .monitor-loading {
+  background: #050505;
+}
+html[data-theme="dark"] .monitor-canvas {
+  filter: invert(0.94) hue-rotate(180deg);
+}
+.app .nav {
+  opacity: var(--monitor-nav-opacity, 0);
+}
+.app .scroll-progress {
+  opacity: var(--monitor-dom-opacity, 0);
+}
+@media (max-width: 700px) {
+  .monitor-experience,
+  .monitor-loading {
+    height: 175vh;
+  }
+  .timeline-rail {
+    top: 175vh;
+  }
+  .monitor-preview {
+    width: 650px;
+    height: 405px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .monitor-experience,
+  .monitor-loading {
+    height: 115vh;
+  }
+  .timeline-rail {
+    top: 115vh;
+  }
+  .monitor-instruction {
+    display: none;
+  }
+}
 .section {
   position: relative;
   min-height: 100vh;
@@ -2142,6 +2367,21 @@ html[data-theme="dark"] .section-number {
 }
 html[data-theme="dark"] .email {
   border-bottom-color: rgba(255, 255, 255, 0.42);
+}
+
+/* The portfolio timeline begins after the cinematic monitor entrance. */
+.timeline-rail {
+  top: 220vh;
+}
+@media (max-width: 700px) {
+  .timeline-rail {
+    top: 175vh;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .timeline-rail {
+    top: 115vh;
+  }
 }
 html[data-theme="dark"] .project-card,
 html[data-theme="dark"] .goal-card,

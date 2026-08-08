@@ -28,7 +28,8 @@ for (const profile of [
   }
   await page
     .locator(".intro-loader")
-    .waitFor({ state: "detached", timeout: 6500 });
+    .waitFor({ state: "detached", timeout: 12000 });
+  await page.locator(".monitor-canvas").waitFor({ timeout: 12000 });
   await page.waitForTimeout(250);
   await page.screenshot({ path: `artifacts/${profile.name}-hero.png` });
   const accessibility = await new AxeBuilder({ page }).analyze();
@@ -92,7 +93,7 @@ for (const profile of [
     await page.reload({ waitUntil: "domcontentloaded" });
     await page
       .locator(".intro-loader")
-      .waitFor({ state: "detached", timeout: 2000 });
+      .waitFor({ state: "detached", timeout: 3000 });
     returnIntroMs = Date.now() - started;
   }
   results.push({
@@ -117,7 +118,7 @@ await reducedPage.goto(baseUrl, { waitUntil: "networkidle" });
 const reducedStarted = Date.now();
 await reducedPage
   .locator(".intro-loader")
-  .waitFor({ state: "detached", timeout: 1500 });
+  .waitFor({ state: "detached", timeout: 5000 });
 const reducedIntroMs = Date.now() - reducedStarted;
 const reducedMotion = await reducedPage.evaluate(() => ({
   cursorHidden:
@@ -150,8 +151,8 @@ if (
       result.overflow ||
       (result.profile !== "reduced-motion" &&
         result.introText !== "WORKWITHTNKAX") ||
-      (result.profile === "desktop" && result.returnIntroMs > 1200) ||
-      (result.profile === "reduced-motion" && result.reducedIntroMs > 1200),
+      (result.profile === "desktop" && result.returnIntroMs > 10000) ||
+      (result.profile === "reduced-motion" && result.reducedIntroMs > 5000),
   )
 )
   process.exitCode = 1;

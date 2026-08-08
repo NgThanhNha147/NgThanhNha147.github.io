@@ -1,4 +1,6 @@
 import {
+  lazy,
+  Suspense,
   useEffect,
   useMemo,
   useRef,
@@ -23,6 +25,7 @@ import { copy, projects, skillGroups, type Language } from "./content";
 import Navigation from "./Navigation";
 import ProjectCard from "./ProjectCard";
 import IntroLoader from "./IntroLoader";
+const MonitorExperience = lazy(() => import("./MonitorExperience"));
 gsap.registerPlugin(ScrollTrigger);
 const ids = [
   "home",
@@ -91,6 +94,7 @@ export default function App() {
   const [leaving, setLeaving] = useState(false);
   const [theme, setTheme] = useState<"light" | "dark">("light");
   const [languageChanging, setLanguageChanging] = useState(false);
+  const [monitorReady, setMonitorReady] = useState(false);
   const timeline = useRef<HTMLElement>(null),
     t = copy[lang];
   const code = useMemo(
@@ -109,6 +113,7 @@ export default function App() {
     document.documentElement.dataset.theme = theme;
   }, [theme]);
   useEffect(() => {
+    if (!monitorReady) return;
     const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
     const lenis = new Lenis({
       duration: reduced ? 0 : 1.05,
@@ -170,7 +175,7 @@ export default function App() {
       lenis.destroy();
       ctx.revert();
     };
-  }, []);
+  }, [monitorReady]);
   return (
     <div
       className={`${loaded ? "app loaded" : "app loading"} ${leaving ? "leaving" : ""} ${languageChanging ? "language-changing" : ""}`}
@@ -213,36 +218,43 @@ export default function App() {
         <div className="timeline-rail">
           <div className="timeline-fill" />
         </div>
-        <section id="home" className="hero section">
-          <div className="hero-copy">
-            <p className="eyebrow">{t.eyebrow}</p>
-            <h1>{t.title}</h1>
-            <p className="hero-subtitle">{t.subtitle}</p>
-            <div className="role-cycle">
-              <span>I BUILD</span>
-              <div>
-                <b>WEB APPLICATIONS</b>
-                <b>APIs</b>
-                <b>BACKEND SYSTEMS</b>
-                <b>INTERACTIVE PRODUCTS</b>
+        {!loaded ? (
+          <section id="home" className="monitor-loading" />
+        ) : (
+          <Suspense
+            fallback={<section id="home" className="monitor-loading" />}
+          >
+            <MonitorExperience onReady={() => setMonitorReady(true)}>
+              <div className="hero section">
+                <div className="hero-copy">
+                  <p className="eyebrow">{t.eyebrow}</p>
+                  <h1>{t.title}</h1>
+                  <p className="hero-subtitle">{t.subtitle}</p>
+                  <div className="role-cycle">
+                    <span>I BUILD</span>
+                    <div>
+                      <b>WEB APPLICATIONS</b>
+                      <b>APIs</b>
+                      <b>BACKEND SYSTEMS</b>
+                      <b>INTERACTIVE PRODUCTS</b>
+                    </div>
+                  </div>
+                  <div className="hero-actions">
+                    <GlassLink href="#projects" primary>
+                      View Projects <ArrowUpRight size={17} />
+                    </GlassLink>
+                    <GlassLink href="/cv/Thanh-Nha-CV.pdf">
+                      Download CV <Download size={16} />
+                    </GlassLink>
+                    <GlassLink href="https://github.com/NgThanhNha147">
+                      <Github size={17} /> GitHub
+                    </GlassLink>
+                  </div>
+                </div>
               </div>
-            </div>
-            <div className="hero-actions">
-              <GlassLink href="#projects" primary>
-                View Projects <ArrowUpRight size={17} />
-              </GlassLink>
-              <GlassLink href="/cv/Thanh-Nha-CV.pdf">
-                Download CV <Download size={16} />
-              </GlassLink>
-              <GlassLink href="https://github.com/NgThanhNha147">
-                <Github size={17} /> GitHub
-              </GlassLink>
-            </div>
-          </div>
-          <a href="#about" className="scroll-cue">
-            SCROLL <i />
-          </a>
-        </section>
+            </MonitorExperience>
+          </Suspense>
+        )}
         <Section id="about" number="01" title={t.nav[1]}>
           <div className="about-grid">
             <figure
