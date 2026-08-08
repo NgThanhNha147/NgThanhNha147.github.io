@@ -250,6 +250,10 @@ export default function App() {
                 src="/images/thanh-nha-developer.png"
                 alt="Thanh Nha working at a developer desk"
               />
+              <span className="photo-skill skill-dotnet">.NET</span>
+              <span className="photo-skill skill-python">PYTHON</span>
+              <span className="photo-skill skill-react">REACT</span>
+              <span className="photo-skill skill-typescript">TYPESCRIPT</span>
             </figure>
             <div className="about-copy">
               <p>{t.about}</p>
