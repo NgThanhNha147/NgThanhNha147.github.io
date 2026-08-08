@@ -17,7 +17,19 @@ for (const profile of [
   });
   page.on("pageerror", (error) => errors.push(error.message));
   await page.goto(baseUrl, { waitUntil: "networkidle" });
-  await page.waitForTimeout(1700);
+  const introText = (await page.locator(".intro-name").textContent())
+    ?.replace(/\s+/g, "")
+    .trim();
+  if (profile.name === "compact") {
+    await page.waitForTimeout(550);
+    await page.screenshot({ path: "artifacts/intro-chaos.png" });
+    await page.waitForTimeout(1150);
+    await page.screenshot({ path: "artifacts/intro-assembly.png" });
+  }
+  await page
+    .locator(".intro-loader")
+    .waitFor({ state: "detached", timeout: 6500 });
+  await page.waitForTimeout(250);
   await page.screenshot({ path: `artifacts/${profile.name}-hero.png` });
   const accessibility = await new AxeBuilder({ page }).analyze();
   const seriousA11y = accessibility.violations.filter((violation) =>
@@ -74,11 +86,22 @@ for (const profile of [
       offenders,
     };
   });
+  let returnIntroMs = null;
+  if (profile.name === "desktop") {
+    const started = Date.now();
+    await page.reload({ waitUntil: "domcontentloaded" });
+    await page
+      .locator(".intro-loader")
+      .waitFor({ state: "detached", timeout: 2000 });
+    returnIntroMs = Date.now() - started;
+  }
   results.push({
     profile: profile.name,
     errors,
     seriousA11y: seriousA11y.map((v) => v.id),
     languageStored,
+    introText,
+    returnIntroMs,
     sections,
     githubLinks,
     ...layout,
@@ -91,6 +114,11 @@ const reducedContext = await browser.newContext({
 });
 const reducedPage = await reducedContext.newPage();
 await reducedPage.goto(baseUrl, { waitUntil: "networkidle" });
+const reducedStarted = Date.now();
+await reducedPage
+  .locator(".intro-loader")
+  .waitFor({ state: "detached", timeout: 1500 });
+const reducedIntroMs = Date.now() - reducedStarted;
 const reducedMotion = await reducedPage.evaluate(() => ({
   cursorHidden:
     getComputedStyle(document.querySelector(".cursor-ring")).display === "none",
@@ -105,6 +133,7 @@ results.push({
   sections: 7,
   githubLinks: 3,
   overflow: false,
+  reducedIntroMs,
   reducedMotion,
 });
 await reducedContext.close();
@@ -118,7 +147,11 @@ if (
       !result.languageStored ||
       result.sections !== 7 ||
       result.githubLinks < 3 ||
-      result.overflow,
+      result.overflow ||
+      (result.profile !== "reduced-motion" &&
+        result.introText !== "THANHNHÃ") ||
+      (result.profile === "desktop" && result.returnIntroMs > 1200) ||
+      (result.profile === "reduced-motion" && result.reducedIntroMs > 1200),
   )
 )
   process.exitCode = 1;

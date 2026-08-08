@@ -24,6 +24,7 @@ import { ClickBurst, Cursor, Magnetic } from "./Interactive";
 import { copy, projects, skillGroups, type Language } from "./content";
 import Navigation from "./Navigation";
 import ProjectCard from "./ProjectCard";
+import IntroLoader from "./IntroLoader";
 gsap.registerPlugin(ScrollTrigger);
 const ids = [
   "home",
@@ -35,21 +36,6 @@ const ids = [
   "contact",
 ];
 const ThreeHero = lazy(() => import("./ThreeHero"));
-
-function LoaderCounter() {
-  const [progress, setProgress] = useState(0);
-  useEffect(() => {
-    const started = performance.now();
-    let raf = 0;
-    const tick = (now: number) => {
-      setProgress(Math.min(100, Math.round(((now - started) / 1150) * 100)));
-      if (now - started < 1150) raf = requestAnimationFrame(tick);
-    };
-    raf = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(raf);
-  }, []);
-  return <>{progress.toString().padStart(3, "0")}</>;
-}
 
 function GlassLink({
   href,
@@ -124,10 +110,6 @@ export default function App() {
     ],
     [],
   );
-  useEffect(() => {
-    const timer = setTimeout(() => setLoaded(true), 1400);
-    return () => clearTimeout(timer);
-  }, []);
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => setHeroVisible(entry.isIntersecting),
@@ -204,13 +186,7 @@ export default function App() {
     <div
       className={`${loaded ? "app loaded" : "app loading"} ${leaving ? "leaving" : ""} ${languageChanging ? "language-changing" : ""}`}
     >
-      <div className="loader">
-        <span>INITIALIZING PORTFOLIO</span>
-        <strong>
-          <LoaderCounter />
-        </strong>
-        <div />
-      </div>
+      {!loaded && <IntroLoader onComplete={() => setLoaded(true)} />}
       <Cursor />
       <ClickBurst />
       <div className="ambient" />
@@ -245,7 +221,7 @@ export default function App() {
           <div className="timeline-fill" />
         </div>
         <section id="home" className="hero section" ref={heroRef}>
-          {loaded && heroVisible && !reducedMotion && (
+          {heroVisible && !reducedMotion && (
             <Suspense fallback={<div className="three-fallback" />}>
               <ThreeHero />
             </Suspense>
