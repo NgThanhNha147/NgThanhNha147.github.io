@@ -211,26 +211,6 @@ button {
   opacity: 0.45;
   pointer-events: none;
 }
-.intro-sweep {
-  position: absolute;
-  z-index: 3;
-  left: 0;
-  top: -28%;
-  width: 28%;
-  height: 156%;
-  transform: translateX(-220%) skewX(-12deg);
-  opacity: 0;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(255, 255, 255, 0.92),
-    rgba(53, 232, 218, 0.48),
-    transparent
-  );
-  filter: blur(8px);
-  mix-blend-mode: screen;
-  pointer-events: none;
-}
 .intro-status {
   display: grid;
   justify-items: center;
@@ -285,9 +265,6 @@ button {
   .intro-grid {
     background-size: 48px 48px;
     opacity: 0.14;
-  }
-  .intro-sweep {
-    filter: blur(5px);
   }
 }
 @media (prefers-reduced-motion: reduce) {

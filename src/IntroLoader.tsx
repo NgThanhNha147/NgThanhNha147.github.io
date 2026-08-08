@@ -78,17 +78,11 @@ export default function IntroLoader({
         });
         gsap.set(".intro-name", { letterSpacing: "0.08em" });
         timeline
-          .set(".intro-sweep", { opacity: 1 })
-          .to(".intro-sweep", {
-            xPercent: 220,
-            duration: reduced ? 0.18 : 0.26,
-            ease: "power2.inOut",
+          .to(".intro-role, .intro-ready", {
+            opacity: 1,
+            y: 0,
+            duration: reduced ? 0.12 : 0.14,
           })
-          .to(
-            ".intro-role, .intro-ready",
-            { opacity: 1, y: 0, duration: reduced ? 0.12 : 0.14 },
-            "-=0.1",
-          )
           .to(
             element,
             {
@@ -178,19 +172,6 @@ export default function IntroLoader({
           { scale: 1.7, opacity: 0, duration: 0.65, stagger: 0.075 },
           1.65,
         )
-        .fromTo(
-          ".intro-sweep",
-          { opacity: 0 },
-          {
-            opacity: 1,
-            xPercent: 220,
-            duration: 0.52,
-            ease: "power2.inOut",
-            immediateRender: false,
-          },
-          2.85,
-        )
-        .set(".intro-sweep", { opacity: 0 }, 3.38)
         .to(
           ".intro-name",
           {
@@ -285,7 +266,6 @@ export default function IntroLoader({
               </div>
             );
           })}
-          <i className="intro-sweep" aria-hidden="true" />
         </div>
         <div className="intro-status">
           <p className="intro-role">FULL STACK DEVELOPER</p>
