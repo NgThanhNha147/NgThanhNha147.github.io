@@ -587,8 +587,9 @@ main {
 }
 .scroll-cue {
   position: absolute;
-  bottom: 35px;
-  left: 50%;
+  bottom: 0;
+  left: 8vw;
+  transform: translateX(-50%);
   font: 500 9px DM Mono;
   letter-spacing: 0.2em;
   color: #7897a7;
@@ -598,14 +599,14 @@ main {
 }
 .scroll-cue i {
   width: 1px;
-  height: 40px;
-  background: linear-gradient(var(--cyan), transparent);
+  height: 52px;
+  background: var(--cyan);
   animation: cue 1.6s infinite;
+  transform-origin: bottom;
 }
 @keyframes cue {
   50% {
     transform: scaleY(0.5);
-    transform-origin: top;
   }
 }
 .timeline-rail {
@@ -1330,6 +1331,9 @@ html:not([data-theme="dark"]) .page-transition {
   .timeline-rail {
     left: 25px;
   }
+  .scroll-cue {
+    left: 25px;
+  }
   .content-section,
   .content-section.wide {
     padding: 100px 24px 100px 58px;
@@ -1795,6 +1799,9 @@ html:not([data-theme="dark"]) .terminal,
 html:not([data-theme="dark"]) .terminal b,
 html:not([data-theme="dark"]) .scroll-cue {
   color: #555;
+}
+html:not([data-theme="dark"]) .scroll-cue i {
+  background: #111;
 }
 html:not([data-theme="dark"]) .glass-button.primary {
   color: #fff;
