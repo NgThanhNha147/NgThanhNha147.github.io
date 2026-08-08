@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Josefin+Sans:wght@300;400;500&family=Manrope:wght@400;500;600;700;800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Manrope:wght@400;500;600;700;800&family=MuseoModerno:wght@200;300;400&display=swap");
 :root {
   font-family: Manrope, sans-serif;
   color: #eafcff;
@@ -165,19 +165,24 @@ button {
 }
 .intro-name {
   position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: grid;
+  justify-items: center;
+  gap: 0.02em;
   white-space: nowrap;
-  font-family: "Josefin Sans", Manrope, sans-serif;
-  font-size: clamp(3.5rem, 9.3vw, 9rem);
-  font-weight: 300;
-  line-height: 0.92;
-  letter-spacing: 0.3em;
+  font-family: MuseoModerno, Manrope, sans-serif;
+  font-size: clamp(3rem, 7.4vw, 7rem);
+  font-weight: 200;
+  line-height: 0.78;
+  letter-spacing: 0.26em;
   color: #b8d4d7;
   text-transform: uppercase;
   transform-style: preserve-3d;
   isolation: isolate;
+}
+.intro-word {
+  display: flex;
+  justify-content: center;
+  transform-style: preserve-3d;
 }
 .intro-letter {
   position: relative;
@@ -185,9 +190,6 @@ button {
   transform-style: preserve-3d;
   will-change: transform, filter, opacity;
   text-shadow: 0 0 14px rgba(53, 232, 218, 0.08);
-}
-.intro-letter.word-gap {
-  margin-left: 0.28em;
 }
 .intro-letter::after {
   content: attr(data-letter);
@@ -243,7 +245,7 @@ button {
 .intro-role {
   color: rgba(226, 253, 251, 0.86);
   font:
-    400 10px "Josefin Sans",
+    300 10px MuseoModerno,
     Manrope,
     sans-serif;
   letter-spacing: 0.3em;
@@ -269,11 +271,8 @@ button {
 }
 @media (max-width: 700px) {
   .intro-name {
-    font-size: clamp(2.1rem, 10.5vw, 4.2rem);
-    letter-spacing: 0.25em;
-  }
-  .intro-letter.word-gap {
-    margin-left: 0.18em;
+    font-size: clamp(2.5rem, 12vw, 4rem);
+    letter-spacing: 0.2em;
   }
   .intro-role {
     font-size: 9px;
@@ -1140,7 +1139,7 @@ footer > div {
 }
 footer p {
   text-align: center;
-  color: #526d7b;
+  color: #6f8f9e;
   font: 400 9px DM Mono;
 }
 @keyframes marquee {

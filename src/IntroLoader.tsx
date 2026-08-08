@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 
-const letters = ["T", "H", "A", "N", "H", "N", "H", "Ã"];
+const words = ["WORK", "WITH", "TNKAX"];
 const glyphs = [
   ["{", 7, 16],
   ["01", 18, 8],
@@ -28,16 +28,13 @@ const glyphs = [
   ["<>", 86, 79],
   ["}", 96, 88],
 ] as const;
-const chaos = [
-  { x: -420, y: -210, z: -180, r: -18, s: 1.45 },
-  { x: 390, y: -110, z: 120, r: 14, s: 0.72 },
-  { x: -250, y: 230, z: -320, r: 11, s: 0.5 },
-  { x: 95, y: -330, z: 240, r: -12, s: 1.8 },
-  { x: 430, y: 190, z: -120, r: 18, s: 0.82 },
-  { x: -390, y: 95, z: 170, r: -15, s: 1.25 },
-  { x: 250, y: 290, z: -260, r: 10, s: 0.62 },
-  { x: 460, y: -250, z: 210, r: -20, s: 1.5 },
-];
+const chaosFor = (index: number) => ({
+  x: ((index * 197 + 83) % 920) - 460,
+  y: ((index * 149 + 47) % 640) - 320,
+  z: ((index * 173 + 29) % 560) - 280,
+  r: ((index * 17 + 9) % 44) - 22,
+  s: 0.62 + ((index * 23 + 11) % 100) / 82,
+});
 
 export default function IntroLoader({
   onComplete,
@@ -53,7 +50,8 @@ export default function IntroLoader({
     if (!element) return;
     const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
     const mobile = matchMedia("(max-width: 700px)").matches;
-    const returning = sessionStorage.getItem("thanh-nha-intro-seen") === "1";
+    const returning =
+      sessionStorage.getItem("work-with-tnkax-intro-seen") === "1";
     document.body.style.overflow = "hidden";
 
     const context = gsap.context(() => {
@@ -62,7 +60,7 @@ export default function IntroLoader({
       const timeline = gsap.timeline({
         defaults: { ease: "power4.out" },
         onComplete: () => {
-          sessionStorage.setItem("thanh-nha-intro-seen", "1");
+          sessionStorage.setItem("work-with-tnkax-intro-seen", "1");
           document.body.style.overflow = "";
           complete.current();
         },
@@ -103,7 +101,7 @@ export default function IntroLoader({
       }
 
       chars.forEach((char, index) => {
-        const state = chaos[index];
+        const state = chaosFor(index);
         gsap.set(char, {
           x: state.x * (mobile ? 0.42 : 1),
           y: state.y * (mobile ? 0.55 : 1),
@@ -200,7 +198,9 @@ export default function IntroLoader({
           chars,
           {
             x: (index) =>
-              index < 4 ? -90 - index * 22 : 90 + (index - 4) * 22,
+              index < chars.length / 2
+                ? -90 - index * 18
+                : 90 + (index - chars.length / 2) * 18,
             y: (index) => (index % 2 ? 28 : -24),
             rotate: (index) => (index % 2 ? 5 : -5),
             opacity: 0,
@@ -233,11 +233,11 @@ export default function IntroLoader({
     <div
       ref={root}
       className="intro-loader"
-      aria-label="Loading Thanh Nha portfolio"
+      aria-label="Loading Work With Tnkax portfolio"
     >
       <div className="intro-grid" aria-hidden="true" />
       <div className="intro-code" aria-hidden="true">
-        <span>const identity = "THANH NHA";</span>
+        <span>const identity = "WORK WITH TNKAX";</span>
         <span>system.compose(profile);</span>
       </div>
       <div className="intro-ambient" aria-hidden="true" />
@@ -253,18 +253,29 @@ export default function IntroLoader({
         ))}
       </div>
       <div className="intro-stage">
-        <div className="intro-name" aria-label="THANH NHÃ">
-          {letters.map((letter, index) => (
-            <span
-              aria-hidden="true"
-              data-letter={letter}
-              className={`intro-letter ${index === 5 ? "word-gap" : ""}`}
-              key={`${letter}-${index}`}
-            >
-              {letter}
-              <i className="intro-pulse" aria-hidden="true" />
-            </span>
-          ))}
+        <div className="intro-name" aria-label="WORK WITH TNKAX">
+          {words.map((word, wordIndex) => {
+            const offset = words
+              .slice(0, wordIndex)
+              .reduce((total, item) => total + item.length, 0);
+            return (
+              <div className="intro-word" key={word} aria-hidden="true">
+                {word.split("").map((letter, letterIndex) => {
+                  const index = offset + letterIndex;
+                  return (
+                    <span
+                      data-letter={letter}
+                      className="intro-letter"
+                      key={`${letter}-${index}`}
+                    >
+                      {letter}
+                      <i className="intro-pulse" aria-hidden="true" />
+                    </span>
+                  );
+                })}
+              </div>
+            );
+          })}
           <i className="intro-sweep" aria-hidden="true" />
         </div>
         <div className="intro-status">

@@ -149,7 +149,7 @@ if (
       result.githubLinks < 3 ||
       result.overflow ||
       (result.profile !== "reduced-motion" &&
-        result.introText !== "THANHNHÃ") ||
+        result.introText !== "WORKWITHTNKAX") ||
       (result.profile === "desktop" && result.returnIntroMs > 1200) ||
       (result.profile === "reduced-motion" && result.reducedIntroMs > 1200),
   )
