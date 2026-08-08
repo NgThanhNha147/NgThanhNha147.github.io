@@ -1,0 +1,23 @@
+name: portfolio
+on: [push, pull_request]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - run: npx playwright install --with-deps chromium
+      - name: Browser audit
+        run: |
+          npm run preview -- --host 127.0.0.1 &
+          sleep 3
+          npm run audit:browser
+      - name: Verify public content
+        run: |
+          if grep -RniE "HACOM|enterprise CRM|developing CRM" src public; then exit 1; fi
+          grep -R "github.com/NgThanhNha147" src
