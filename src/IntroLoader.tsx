@@ -78,6 +78,7 @@ export default function IntroLoader({
         });
         gsap.set(".intro-name", { letterSpacing: "0.08em" });
         timeline
+          .set(".intro-sweep", { opacity: 1 })
           .to(".intro-sweep", {
             xPercent: 220,
             duration: reduced ? 0.18 : 0.26,
@@ -177,11 +178,13 @@ export default function IntroLoader({
           { scale: 1.7, opacity: 0, duration: 0.65, stagger: 0.075 },
           1.65,
         )
+        .set(".intro-sweep", { opacity: 1 }, 2.82)
         .to(
           ".intro-sweep",
           { xPercent: 220, duration: 0.52, ease: "power2.inOut" },
           2.85,
         )
+        .set(".intro-sweep", { opacity: 0 }, 3.38)
         .to(
           ".intro-name",
           {
