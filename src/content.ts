@@ -11,7 +11,7 @@ export const copy = {
       "Contact",
     ],
     eyebrow: "Hey, I'm Thanh Nha.",
-    title: "I build full-stack web applications.",
+    title: "I build full‑stack web applications.",
     subtitle:
       "A Full-stack Developer based in Hanoi, focused on .NET, Python and building practical web products from interface to database.",
     about:
@@ -34,7 +34,7 @@ export const copy = {
       "Liên hệ",
     ],
     eyebrow: "Xin chào, mình là Thanh Nhã.",
-    title: "Mình xây dựng các ứng dụng web full-stack.",
+    title: "Mình xây dựng các ứng dụng web full‑stack.",
     subtitle:
       "Full-stack Developer tại Hà Nội, tập trung vào .NET, Python và xây dựng sản phẩm thực tế từ giao diện đến cơ sở dữ liệu.",
     about:

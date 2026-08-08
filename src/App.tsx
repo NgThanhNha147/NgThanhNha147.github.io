@@ -156,7 +156,7 @@ export default function App() {
           {
             y: 50,
             opacity: 0,
-            filter: "blur(12px)",
+            filter: "blur(3px)",
             clipPath: "inset(0 0 35% 0)",
           },
           {

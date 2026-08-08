@@ -80,9 +80,13 @@ export default function ThreeHero() {
   return (
     <div className="three-scene" aria-hidden="true">
       <Canvas
-        dpr={[1, 1.6]}
+        dpr={[1, 1.35]}
         camera={{ position: [0, 0, 5], fov: 48 }}
-        gl={{ alpha: true, antialias: true }}
+        gl={{
+          alpha: true,
+          antialias: false,
+          powerPreference: "high-performance",
+        }}
       >
         <ambientLight intensity={0.35} />
         <pointLight color="#00d9ff" position={[2, 2, 3]} intensity={18} />

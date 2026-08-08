@@ -6,6 +6,7 @@ const baseUrl = process.env.PORTFOLIO_URL ?? "http://127.0.0.1:4173";
 const results = [];
 for (const profile of [
   { name: "desktop", viewport: { width: 1440, height: 1000 } },
+  { name: "compact", viewport: { width: 800, height: 800 } },
   { name: "mobile", viewport: { width: 390, height: 844 }, isMobile: true },
 ]) {
   const context = await browser.newContext(profile);
@@ -17,6 +18,7 @@ for (const profile of [
   page.on("pageerror", (error) => errors.push(error.message));
   await page.goto(baseUrl, { waitUntil: "networkidle" });
   await page.waitForTimeout(1700);
+  await page.screenshot({ path: `artifacts/${profile.name}-hero.png` });
   const accessibility = await new AxeBuilder({ page }).analyze();
   const seriousA11y = accessibility.violations.filter((violation) =>
     ["serious", "critical"].includes(violation.impact ?? ""),
