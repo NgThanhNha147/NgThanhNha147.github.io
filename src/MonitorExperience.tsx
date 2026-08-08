@@ -203,35 +203,9 @@ function StudioBackdrop() {
   );
 }
 
-function Monitor() {
+function MonitorStand() {
   return (
     <group position={[0, 0.9, 0]}>
-      <RoundedBox
-        args={[7.75, 3.5, 0.24]}
-        radius={0.1}
-        smoothness={5}
-        castShadow
-        receiveShadow
-      >
-        <meshStandardMaterial
-          color="#151515"
-          roughness={0.3}
-          metalness={0.74}
-        />
-      </RoundedBox>
-      <mesh position={[0, 0, 0.19]}>
-        <planeGeometry args={[7.46, 3.25, 64, 1]} />
-        <meshStandardMaterial color="#f9f9f7" roughness={0.82} />
-      </mesh>
-      <mesh position={[0, 0, 0.205]} rotation={[0, 0, -0.015]}>
-        <planeGeometry args={[2.2, 3.2]} />
-        <meshBasicMaterial
-          color="#fff"
-          transparent
-          opacity={0.045}
-          depthWrite={false}
-        />
-      </mesh>
       <group position={[0, -3.1, -0.08]}>
         <RoundedBox
           args={[0.44, 2.72, 0.36]}
@@ -276,7 +250,6 @@ function Monitor() {
 }
 
 function Scene({ progress }: { progress: RefObject<number> }) {
-  const monitor = useRef<THREE.Group>(null);
   const foreground = useRef<THREE.Group>(null);
   const left = useRef<THREE.Group>(null);
   const right = useRef<THREE.Group>(null);
@@ -304,14 +277,6 @@ function Scene({ progress }: { progress: RefObject<number> }) {
       0.075,
     );
     camera.lookAt(0, 0, 0);
-    if (monitor.current) {
-      monitor.current.rotation.y =
-        THREE.MathUtils.lerp(0.055, 0, eased) +
-        pointer.x * 0.018 * pointerStrength;
-      monitor.current.rotation.x =
-        THREE.MathUtils.lerp(-0.025, 0, eased) -
-        pointer.y * 0.012 * pointerStrength;
-    }
     if (foreground.current) {
       foreground.current.position.y = eased * -3.2;
       foreground.current.position.z = eased * 1.2;
@@ -349,9 +314,7 @@ function Scene({ progress }: { progress: RefObject<number> }) {
         distance={9}
         color="#fff"
       />
-      <group ref={monitor}>
-        <Monitor />
-      </group>
+      <MonitorStand />
       <group ref={foreground}>
         <mesh position={[0, -3.72, 0]} receiveShadow>
           <boxGeometry args={[13.5, 0.3, 5.4]} />
@@ -492,7 +455,9 @@ export default function MonitorExperience({
         mobile ? 620 : 1120,
       );
       const initialScreenHeight = initialScreenWidth / (mobile ? 2.14 : 2.295);
-      const initialScreenTop = mobile ? innerHeight * 0.34 : innerHeight * 0.17;
+      const initialScreenTop = mobile
+        ? innerHeight * 0.364
+        : innerHeight * 0.17;
       const initialBezel = mobile ? 6 : 10;
       const finalBezel = 12;
       const initialWidth = initialScreenWidth + initialBezel * 2;
@@ -598,7 +563,7 @@ export default function MonitorExperience({
       className={`monitor-experience state-${introState}`}
       ref={root}
     >
-      <div className="monitor-sticky">
+      <div className="monitor-root monitor-sticky">
         {sceneActive && !reducedMotion && (
           <div className="monitor-canvas" aria-hidden="true">
             <Canvas
@@ -616,8 +581,8 @@ export default function MonitorExperience({
           <code>app.MapControllers();</code>
           <code>SELECT quality FROM projects;</code>
         </div>
-        <div className="monitor-display-shell">
-          <div className="screen-portal">
+        <div className="monitor-bezel">
+          <div className="screen-viewport">
             <LoaderIdentity state={introState} />
             <div className="screen-hero">{children}</div>
           </div>

@@ -32,6 +32,63 @@ for (const profile of [
   await page.locator(".monitor-canvas").waitFor({ timeout: 12000 });
   await page.waitForTimeout(250);
   await page.screenshot({ path: `artifacts/${profile.name}-hero.png` });
+  const monitorSamples = [];
+  for (const requestedProgress of [0, 0.4, 0.68, 0.82, 0.95, 1]) {
+    await page.evaluate((progress) => {
+      const monitor = document.querySelector(".monitor-experience");
+      const distance = monitor.offsetHeight - innerHeight;
+      scrollTo(0, monitor.offsetTop + distance * progress);
+    }, requestedProgress);
+    await page.waitForTimeout(120);
+    monitorSamples.push(
+      await page.evaluate((requested) => {
+        const bezel = document
+          .querySelector(".monitor-bezel")
+          .getBoundingClientRect();
+        const screen = document
+          .querySelector(".screen-viewport")
+          .getBoundingClientRect();
+        const fullscreen =
+          Math.abs(screen.left) < 0.1 &&
+          Math.abs(screen.top) < 0.1 &&
+          Math.abs(screen.right - innerWidth) < 0.1 &&
+          Math.abs(screen.bottom - innerHeight) < 0.1;
+        const bezelOutside =
+          bezel.left < 0 &&
+          bezel.top < 0 &&
+          bezel.right > innerWidth &&
+          bezel.bottom > innerHeight;
+        return {
+          requested,
+          contained:
+            screen.left >= bezel.left - 0.1 &&
+            screen.top >= bezel.top - 0.1 &&
+            screen.right <= bezel.right + 0.1 &&
+            screen.bottom <= bezel.bottom + 0.1,
+          fullscreenAfterBezel: !fullscreen || bezelOutside,
+        };
+      }, requestedProgress),
+    );
+  }
+  const monitorArchitecture = await page.evaluate(() => ({
+    roots: document.querySelectorAll(".monitor-root").length,
+    bezels: document.querySelectorAll(".monitor-bezel").length,
+    screens: document.querySelectorAll(".screen-viewport").length,
+    loaders: document.querySelectorAll(".screen-loader").length,
+    heroes: document.querySelectorAll(".screen-hero").length,
+    overflow: getComputedStyle(document.querySelector(".screen-viewport"))
+      .overflow,
+  }));
+  monitorArchitecture.valid =
+    monitorArchitecture.roots === 1 &&
+    monitorArchitecture.bezels === 1 &&
+    monitorArchitecture.screens === 1 &&
+    monitorArchitecture.loaders === 1 &&
+    monitorArchitecture.heroes === 1 &&
+    monitorArchitecture.overflow === "hidden" &&
+    monitorSamples.every(
+      (sample) => sample.contained && sample.fullscreenAfterBezel,
+    );
   const accessibility = await new AxeBuilder({ page }).analyze();
   const seriousA11y = accessibility.violations.filter((violation) =>
     ["serious", "critical"].includes(violation.impact ?? ""),
@@ -102,6 +159,8 @@ for (const profile of [
     seriousA11y: seriousA11y.map((v) => v.id),
     languageStored,
     introText,
+    monitorArchitecture,
+    monitorSamples,
     returnIntroMs,
     sections,
     githubLinks,
@@ -149,6 +208,8 @@ if (
       result.sections !== 7 ||
       result.githubLinks < 3 ||
       result.overflow ||
+      (result.profile !== "reduced-motion" &&
+        !result.monitorArchitecture?.valid) ||
       (result.profile !== "reduced-motion" &&
         result.introText !== "WORKWITHTNKAX") ||
       (result.profile === "desktop" && result.returnIntroMs > 10000) ||

@@ -2441,7 +2441,7 @@ html[data-theme="dark"] .education p {
   transform: none;
   transition: opacity 0.12s linear;
 }
-.monitor-display-shell {
+.monitor-bezel {
   position: fixed;
   z-index: 3;
   left: var(--display-left, 19vw);
@@ -2457,7 +2457,7 @@ html[data-theme="dark"] .education p {
   overflow: hidden;
   will-change: left, top, width, height, border-radius;
 }
-.screen-portal {
+.screen-viewport {
   position: absolute;
   z-index: 1;
   inset: var(--display-bezel, 10px);
@@ -2475,7 +2475,7 @@ html[data-theme="dark"] .education p {
     inset -16px 0 24px
       rgba(0, 0, 0, calc((1 - var(--monitor-progress, 0)) * 0.025));
 }
-.screen-portal::after {
+.screen-viewport::after {
   content: "";
   position: absolute;
   inset: 0;
@@ -2627,7 +2627,7 @@ html[data-theme="dark"] .education p {
 .timeline-rail {
   top: 230vh;
 }
-html[data-theme="dark"] .screen-portal,
+html[data-theme="dark"] .screen-viewport,
 html[data-theme="dark"] .monitor-sticky {
   background-color: #f5f5f2;
 }

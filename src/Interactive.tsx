@@ -38,7 +38,7 @@ export function Cursor() {
       x = e.clientX;
       y = e.clientY;
       const interactive = (e.target as HTMLElement).closest(
-        "a,button,.cursor-view,.screen-portal",
+        "a,button,.cursor-view,.screen-viewport",
       );
       ring.current?.classList.toggle("interactive", Boolean(interactive));
       ring.current?.classList.toggle(
