@@ -2421,7 +2421,7 @@ html[data-theme="dark"] .education p {
   color: #aaa;
 }
 
-/* Single live DOM portal synchronized with the curved Three.js monitor. */
+/* Single clipped DOM display synchronized with the flat Three.js monitor. */
 .monitor-experience {
   height: 230vh;
   background: #f5f5f2;
@@ -2441,15 +2441,28 @@ html[data-theme="dark"] .education p {
   transform: none;
   transition: opacity 0.12s linear;
 }
-.screen-portal {
+.monitor-display-shell {
   position: fixed;
-  z-index: 2;
-  left: var(--screen-left, 20vw);
-  top: var(--screen-top, 22vh);
-  width: var(--screen-width, 60vw);
-  height: var(--screen-height, 26vw);
+  z-index: 3;
+  left: var(--display-left, 19vw);
+  top: var(--display-top, 16vh);
+  width: var(--display-width, 62vw);
+  height: var(--display-height, 29vw);
+  border-radius: var(--display-radius, 12px);
+  background: #151515;
+  box-shadow:
+    0 18px 45px rgba(0, 0, 0, 0.13),
+    inset 0 1px rgba(255, 255, 255, 0.14);
+  opacity: var(--portal-exit-opacity, 1);
   overflow: hidden;
-  border-radius: var(--screen-radius, 8px);
+  will-change: left, top, width, height, border-radius;
+}
+.screen-portal {
+  position: absolute;
+  z-index: 1;
+  inset: var(--display-bezel, 10px);
+  overflow: hidden;
+  border-radius: max(0px, calc(var(--display-radius, 12px) - 4px));
   color: #111;
   background:
     linear-gradient(rgba(0, 0, 0, 0.022) 1px, transparent 1px),
@@ -2461,10 +2474,6 @@ html[data-theme="dark"] .education p {
       rgba(0, 0, 0, calc((1 - var(--monitor-progress, 0)) * 0.025)),
     inset -16px 0 24px
       rgba(0, 0, 0, calc((1 - var(--monitor-progress, 0)) * 0.025));
-  opacity: var(--portal-exit-opacity, 1);
-  transform: none;
-  transform-origin: center;
-  will-change: left, top, width, height, border-radius, transform;
 }
 .screen-portal::after {
   content: "";
@@ -2492,7 +2501,6 @@ html[data-theme="dark"] .education p {
   justify-items: center;
   opacity: var(--loader-opacity, 1);
   filter: blur(calc(var(--monitor-progress, 0) * 5px));
-  transform: scale(calc(1 + var(--monitor-progress, 0) * 0.08));
   pointer-events: none;
 }
 .screen-loader-name {

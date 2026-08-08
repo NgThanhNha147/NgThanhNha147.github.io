@@ -487,37 +487,43 @@ export default function MonitorExperience({
       const eased = THREE.MathUtils.smootherstep(next, 0, 1);
       const expansion = eased * eased;
       const mobile = innerWidth < 700;
-      const initialWidth = Math.min(
+      const initialScreenWidth = Math.min(
         innerWidth * (mobile ? 0.78 : 0.61),
         mobile ? 620 : 1120,
       );
-      const initialHeight = initialWidth / (mobile ? 2.14 : 2.295);
-      const initialTop = mobile ? innerHeight * 0.34 : innerHeight * 0.17;
+      const initialScreenHeight = initialScreenWidth / (mobile ? 2.14 : 2.295);
+      const initialScreenTop = mobile ? innerHeight * 0.34 : innerHeight * 0.17;
+      const initialBezel = mobile ? 6 : 10;
+      const finalBezel = 12;
+      const initialWidth = initialScreenWidth + initialBezel * 2;
+      const initialHeight = initialScreenHeight + initialBezel * 2;
+      const initialTop = initialScreenTop - initialBezel;
+      const initialLeft = (innerWidth - initialWidth) / 2;
       const width = THREE.MathUtils.lerp(
         initialWidth,
-        innerWidth * 1.04,
+        innerWidth + finalBezel * 2,
         expansion,
       );
       const height = THREE.MathUtils.lerp(
         initialHeight,
-        innerHeight * 1.04,
+        innerHeight + finalBezel * 2,
         expansion,
       );
-      const top = THREE.MathUtils.lerp(
-        initialTop,
-        -innerHeight * 0.02,
-        expansion,
-      );
-      const left = (innerWidth - width) / 2;
+      const top = THREE.MathUtils.lerp(initialTop, -finalBezel, expansion);
+      const left = THREE.MathUtils.lerp(initialLeft, -finalBezel, expansion);
 
       element.style.setProperty("--monitor-progress", String(next));
-      element.style.setProperty("--screen-left", `${left}px`);
-      element.style.setProperty("--screen-top", `${top}px`);
-      element.style.setProperty("--screen-width", `${width}px`);
-      element.style.setProperty("--screen-height", `${height}px`);
+      element.style.setProperty("--display-left", `${left}px`);
+      element.style.setProperty("--display-top", `${top}px`);
+      element.style.setProperty("--display-width", `${width}px`);
+      element.style.setProperty("--display-height", `${height}px`);
       element.style.setProperty(
-        "--screen-radius",
-        `${THREE.MathUtils.lerp(8, 0, expansion)}px`,
+        "--display-bezel",
+        `${THREE.MathUtils.lerp(initialBezel, finalBezel, expansion)}px`,
+      );
+      element.style.setProperty(
+        "--display-radius",
+        `${THREE.MathUtils.lerp(12, 0, expansion)}px`,
       );
       element.style.setProperty(
         "--monitor-scene-opacity",
@@ -610,9 +616,11 @@ export default function MonitorExperience({
           <code>app.MapControllers();</code>
           <code>SELECT quality FROM projects;</code>
         </div>
-        <div className="screen-portal">
-          <LoaderIdentity state={introState} />
-          <div className="screen-hero">{children}</div>
+        <div className="monitor-display-shell">
+          <div className="screen-portal">
+            <LoaderIdentity state={introState} />
+            <div className="screen-hero">{children}</div>
+          </div>
         </div>
         <div className="monitor-instruction">
           <span>SCROLL TO ENTER</span>
