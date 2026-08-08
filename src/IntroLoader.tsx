@@ -59,7 +59,7 @@ export default function IntroLoader({
             ease: "power2.inOut",
           })
           .to(
-            ".intro-ready",
+            ".intro-status",
             { opacity: 1, y: 0, duration: reduced ? 0.12 : 0.14 },
             "-=0.1",
           )
@@ -142,7 +142,8 @@ export default function IntroLoader({
           },
           2.03,
         )
-        .to(".intro-ready", { opacity: 1, y: 0, duration: 0.28 }, 2.18)
+        .to(".intro-role", { opacity: 1, y: 0, duration: 0.28 }, 2.08)
+        .to(".intro-ready", { opacity: 1, y: 0, duration: 0.24 }, 2.2)
         .to(
           chars,
           {
@@ -203,7 +204,10 @@ export default function IntroLoader({
           ))}
           <i className="intro-sweep" aria-hidden="true" />
         </div>
-        <p className="intro-ready">SYSTEM READY</p>
+        <div className="intro-status">
+          <p className="intro-role">FULL STACK DEVELOPER</p>
+          <p className="intro-ready">SYSTEM READY</p>
+        </div>
       </div>
     </div>
   );

@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Manrope:wght@400;500;600;700;800&family=Syne:wght@700;800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Manrope:wght@400;500;600;700;800&family=Sora:wght@600;700;800&display=swap");
 :root {
   font-family: Manrope, sans-serif;
   color: #eafcff;
@@ -155,7 +155,7 @@ button {
   align-items: center;
   justify-content: center;
   white-space: nowrap;
-  font-family: Syne, Manrope, sans-serif;
+  font-family: Sora, Manrope, sans-serif;
   font-size: clamp(3.6rem, 10.5vw, 10rem);
   font-weight: 800;
   line-height: 0.85;
@@ -214,12 +214,29 @@ button {
   mix-blend-mode: screen;
   pointer-events: none;
 }
+.intro-status {
+  display: grid;
+  justify-items: center;
+  gap: 10px;
+  margin-top: 29px;
+}
+.intro-role,
 .intro-ready {
-  margin: 31px 0 0;
+  margin: 0;
   opacity: 0;
   transform: translateY(10px);
+}
+.intro-role {
+  color: rgba(226, 253, 251, 0.86);
+  font:
+    600 11px Sora,
+    Manrope,
+    sans-serif;
+  letter-spacing: 0.3em;
+}
+.intro-ready {
   color: #62d8cf;
-  font: 500 9px DM Mono;
+  font: 500 8px DM Mono;
   letter-spacing: 0.42em;
 }
 .loading .hero-copy {
@@ -243,6 +260,10 @@ button {
   }
   .intro-letter.word-gap {
     margin-left: 0.18em;
+  }
+  .intro-role {
+    font-size: 9px;
+    letter-spacing: 0.22em;
   }
   .intro-grid {
     background-size: 48px 48px;
