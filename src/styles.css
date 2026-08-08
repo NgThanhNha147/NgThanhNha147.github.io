@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Manrope:wght@400;500;600;700;800&family=Sora:wght@600;700;800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Josefin+Sans:wght@300;400;500&family=Manrope:wght@400;500;600;700;800&display=swap");
 :root {
   font-family: Manrope, sans-serif;
   color: #eafcff;
@@ -143,6 +143,20 @@ button {
   background: radial-gradient(circle, rgba(43, 229, 215, 0.1), transparent 63%);
   filter: blur(15px);
 }
+.intro-glyph-field {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+.intro-glyph {
+  position: absolute;
+  color: rgba(152, 247, 236, 0.72);
+  font: 300 clamp(10px, 1vw, 15px) DM Mono;
+  letter-spacing: 0.12em;
+  text-shadow: 0 0 12px rgba(74, 225, 214, 0.2);
+  will-change: transform, opacity;
+}
 .intro-stage {
   position: relative;
   display: grid;
@@ -155,12 +169,12 @@ button {
   align-items: center;
   justify-content: center;
   white-space: nowrap;
-  font-family: Sora, Manrope, sans-serif;
-  font-size: clamp(3.6rem, 10.5vw, 10rem);
-  font-weight: 800;
-  line-height: 0.85;
-  letter-spacing: 0.38em;
-  color: #9ebbc4;
+  font-family: "Josefin Sans", Manrope, sans-serif;
+  font-size: clamp(3.5rem, 9.3vw, 9rem);
+  font-weight: 300;
+  line-height: 0.92;
+  letter-spacing: 0.3em;
+  color: #b8d4d7;
   text-transform: uppercase;
   transform-style: preserve-3d;
   isolation: isolate;
@@ -170,7 +184,7 @@ button {
   display: inline-block;
   transform-style: preserve-3d;
   will-change: transform, filter, opacity;
-  text-shadow: 0 0 18px rgba(53, 232, 218, 0.12);
+  text-shadow: 0 0 14px rgba(53, 232, 218, 0.08);
 }
 .intro-letter.word-gap {
   margin-left: 0.28em;
@@ -180,8 +194,8 @@ button {
   position: absolute;
   inset: 0;
   color: transparent;
-  -webkit-text-stroke: 1px rgba(74, 242, 223, 0.38);
-  transform: translate3d(2px, 1px, -1px);
+  -webkit-text-stroke: 0.5px rgba(74, 242, 223, 0.26);
+  transform: translate3d(1px, 1px, -1px);
 }
 .intro-pulse {
   position: absolute;
@@ -229,7 +243,7 @@ button {
 .intro-role {
   color: rgba(226, 253, 251, 0.86);
   font:
-    600 11px Sora,
+    400 10px "Josefin Sans",
     Manrope,
     sans-serif;
   letter-spacing: 0.3em;
@@ -265,6 +279,9 @@ button {
     font-size: 9px;
     letter-spacing: 0.22em;
   }
+  .intro-glyph:nth-child(n + 13) {
+    display: none;
+  }
   .intro-grid {
     background-size: 48px 48px;
     opacity: 0.14;
@@ -275,7 +292,8 @@ button {
 }
 @media (prefers-reduced-motion: reduce) {
   .intro-grid,
-  .intro-code {
+  .intro-code,
+  .intro-glyph-field {
     display: none;
   }
   .intro-ambient {

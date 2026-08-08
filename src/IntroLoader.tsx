@@ -2,6 +2,32 @@ import { useEffect, useRef } from "react";
 import gsap from "gsap";
 
 const letters = ["T", "H", "A", "N", "H", "N", "H", "Ã"];
+const glyphs = [
+  ["{", 7, 16],
+  ["01", 18, 8],
+  ["</>", 31, 19],
+  ["+", 44, 9],
+  ["N", 58, 17],
+  ["[]", 72, 8],
+  ["Ã", 88, 20],
+  ["/", 95, 42],
+  ["T", 4, 49],
+  ["::", 15, 63],
+  ["*", 27, 46],
+  ["H", 38, 70],
+  ["=>", 51, 56],
+  ["A", 64, 69],
+  ["{}", 77, 48],
+  ["0", 91, 64],
+  [";", 8, 84],
+  ["N", 22, 91],
+  ["~", 35, 80],
+  ["1", 49, 90],
+  ["H", 61, 82],
+  ["//", 74, 91],
+  ["<>", 86, 79],
+  ["}", 96, 88],
+] as const;
 const chaos = [
   { x: -420, y: -210, z: -180, r: -18, s: 1.45 },
   { x: 390, y: -110, z: 120, r: 14, s: 0.72 },
@@ -32,6 +58,7 @@ export default function IntroLoader({
 
     const context = gsap.context(() => {
       const chars = gsap.utils.toArray<HTMLElement>(".intro-letter");
+      const floatingGlyphs = gsap.utils.toArray<HTMLElement>(".intro-glyph");
       const timeline = gsap.timeline({
         defaults: { ease: "power4.out" },
         onComplete: () => {
@@ -59,7 +86,7 @@ export default function IntroLoader({
             ease: "power2.inOut",
           })
           .to(
-            ".intro-status",
+            ".intro-role, .intro-ready",
             { opacity: 1, y: 0, duration: reduced ? 0.12 : 0.14 },
             "-=0.1",
           )
@@ -88,8 +115,32 @@ export default function IntroLoader({
         });
       });
 
+      gsap.set(floatingGlyphs, { opacity: 0, scale: 0.65 });
+
       timeline
         .to(".intro-ambient", { opacity: 1, scale: 1, duration: 0.55 }, 0)
+        .to(
+          floatingGlyphs,
+          {
+            opacity: (index) => 0.28 + (index % 4) * 0.08,
+            scale: 1,
+            duration: 0.7,
+            stagger: 0.025,
+          },
+          0.08,
+        )
+        .to(
+          floatingGlyphs,
+          {
+            x: (index) => (index % 2 ? 34 : -28),
+            y: (index) => -45 - (index % 5) * 15,
+            rotate: (index) => (index % 2 ? 12 : -10),
+            duration: 3.1,
+            stagger: 0.018,
+            ease: "sine.inOut",
+          },
+          0.22,
+        )
         .to(
           chars,
           {
@@ -100,16 +151,16 @@ export default function IntroLoader({
             scale: 1,
             opacity: 1,
             filter: "blur(0px)",
-            duration: 1.05,
-            stagger: 0.075,
-            ease: "expo.out",
+            duration: 1.55,
+            stagger: 0.11,
+            ease: "power3.out",
           },
-          0.25,
+          0.62,
         )
         .to(
           ".intro-name",
-          { letterSpacing: "0.08em", duration: 0.65, ease: "power3.inOut" },
-          0.92,
+          { letterSpacing: "0.13em", duration: 0.82, ease: "power3.inOut" },
+          1.55,
         )
         .to(
           chars,
@@ -121,17 +172,17 @@ export default function IntroLoader({
             repeat: 1,
             ease: "power2.out",
           },
-          0.86,
+          1.55,
         )
         .to(
           ".intro-pulse",
           { scale: 1.7, opacity: 0, duration: 0.65, stagger: 0.075 },
-          0.92,
+          1.65,
         )
         .to(
           ".intro-sweep",
           { xPercent: 220, duration: 0.52, ease: "power2.inOut" },
-          1.82,
+          2.85,
         )
         .to(
           ".intro-name",
@@ -140,10 +191,11 @@ export default function IntroLoader({
             textShadow: "0 0 34px rgba(67,241,221,.28)",
             duration: 0.24,
           },
-          2.03,
+          3.08,
         )
-        .to(".intro-role", { opacity: 1, y: 0, duration: 0.28 }, 2.08)
-        .to(".intro-ready", { opacity: 1, y: 0, duration: 0.24 }, 2.2)
+        .to(floatingGlyphs, { opacity: 0, duration: 0.8 }, 2.98)
+        .to(".intro-role", { opacity: 1, y: 0, duration: 0.4 }, 3.25)
+        .to(".intro-ready", { opacity: 1, y: 0, duration: 0.32 }, 3.42)
         .to(
           chars,
           {
@@ -158,16 +210,16 @@ export default function IntroLoader({
             stagger: 0.025,
             ease: "power3.in",
           },
-          2.55,
+          3.88,
         )
         .to(
           element,
           {
             clipPath: "circle(0% at 50% 50%)",
-            duration: 0.72,
+            duration: 0.86,
             ease: "power4.inOut",
           },
-          2.62,
+          3.94,
         );
     }, element);
 
@@ -189,6 +241,17 @@ export default function IntroLoader({
         <span>system.compose(profile);</span>
       </div>
       <div className="intro-ambient" aria-hidden="true" />
+      <div className="intro-glyph-field" aria-hidden="true">
+        {glyphs.map(([glyph, left, top], index) => (
+          <span
+            className="intro-glyph"
+            key={`${glyph}-${index}`}
+            style={{ left: `${left}%`, top: `${top}%` }}
+          >
+            {glyph}
+          </span>
+        ))}
+      </div>
       <div className="intro-stage">
         <div className="intro-name" aria-label="THANH NHÃ">
           {letters.map((letter, index) => (
