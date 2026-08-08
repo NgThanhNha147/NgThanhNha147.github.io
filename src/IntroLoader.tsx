@@ -178,10 +178,16 @@ export default function IntroLoader({
           { scale: 1.7, opacity: 0, duration: 0.65, stagger: 0.075 },
           1.65,
         )
-        .set(".intro-sweep", { opacity: 1 }, 2.82)
-        .to(
+        .fromTo(
           ".intro-sweep",
-          { xPercent: 220, duration: 0.52, ease: "power2.inOut" },
+          { opacity: 0 },
+          {
+            opacity: 1,
+            xPercent: 220,
+            duration: 0.52,
+            ease: "power2.inOut",
+            immediateRender: false,
+          },
           2.85,
         )
         .set(".intro-sweep", { opacity: 0 }, 3.38)
