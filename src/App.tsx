@@ -24,7 +24,6 @@ import { ClickBurst, Cursor, Magnetic } from "./Interactive";
 import { copy, projects, skillGroups, type Language } from "./content";
 import Navigation from "./Navigation";
 import ProjectCard from "./ProjectCard";
-import IntroLoader from "./IntroLoader";
 const MonitorExperience = lazy(() => import("./MonitorExperience"));
 gsap.registerPlugin(ScrollTrigger);
 const ids = [
@@ -89,8 +88,7 @@ export default function App() {
   const [lang, setLang] = useState<Language>(
       () => (localStorage.getItem("portfolio-language") as Language) || "en",
     ),
-    [active, setActive] = useState(0),
-    [loaded, setLoaded] = useState(false);
+    [active, setActive] = useState(0);
   const [leaving, setLeaving] = useState(false);
   const [theme, setTheme] = useState<"light" | "dark">("light");
   const [languageChanging, setLanguageChanging] = useState(false);
@@ -110,8 +108,27 @@ export default function App() {
   );
   useEffect(() => localStorage.setItem("portfolio-language", lang), [lang]);
   useEffect(() => {
+    const previous = history.scrollRestoration;
+    history.scrollRestoration = "manual";
+    scrollTo(0, 0);
+    return () => {
+      history.scrollRestoration = previous;
+    };
+  }, []);
+  useEffect(() => {
     document.documentElement.dataset.theme = theme;
   }, [theme]);
+  useEffect(() => {
+    if (monitorReady) return;
+    const bodyOverflow = document.body.style.overflow;
+    const rootOverflow = document.documentElement.style.overflow;
+    document.body.style.overflow = "hidden";
+    document.documentElement.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = bodyOverflow;
+      document.documentElement.style.overflow = rootOverflow;
+    };
+  }, [monitorReady]);
   useEffect(() => {
     if (!monitorReady) return;
     const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -178,9 +195,8 @@ export default function App() {
   }, [monitorReady]);
   return (
     <div
-      className={`${loaded ? "app loaded" : "app loading"} ${leaving ? "leaving" : ""} ${languageChanging ? "language-changing" : ""}`}
+      className={`app loaded ${leaving ? "leaving" : ""} ${languageChanging ? "language-changing" : ""}`}
     >
-      {!loaded && <IntroLoader onComplete={() => setLoaded(true)} />}
       <Cursor />
       <ClickBurst />
       <div className="ambient" />
@@ -218,43 +234,37 @@ export default function App() {
         <div className="timeline-rail">
           <div className="timeline-fill" />
         </div>
-        {!loaded ? (
-          <section id="home" className="monitor-loading" />
-        ) : (
-          <Suspense
-            fallback={<section id="home" className="monitor-loading" />}
-          >
-            <MonitorExperience onReady={() => setMonitorReady(true)}>
-              <div className="hero section">
-                <div className="hero-copy">
-                  <p className="eyebrow">{t.eyebrow}</p>
-                  <h1>{t.title}</h1>
-                  <p className="hero-subtitle">{t.subtitle}</p>
-                  <div className="role-cycle">
-                    <span>I BUILD</span>
-                    <div>
-                      <b>WEB APPLICATIONS</b>
-                      <b>APIs</b>
-                      <b>BACKEND SYSTEMS</b>
-                      <b>INTERACTIVE PRODUCTS</b>
-                    </div>
-                  </div>
-                  <div className="hero-actions">
-                    <GlassLink href="#projects" primary>
-                      View Projects <ArrowUpRight size={17} />
-                    </GlassLink>
-                    <GlassLink href="/cv/Thanh-Nha-CV.pdf">
-                      Download CV <Download size={16} />
-                    </GlassLink>
-                    <GlassLink href="https://github.com/NgThanhNha147">
-                      <Github size={17} /> GitHub
-                    </GlassLink>
+        <Suspense fallback={<section id="home" className="monitor-loading" />}>
+          <MonitorExperience onReady={() => setMonitorReady(true)}>
+            <div className="hero section">
+              <div className="hero-copy">
+                <p className="eyebrow">{t.eyebrow}</p>
+                <h1>{t.title}</h1>
+                <p className="hero-subtitle">{t.subtitle}</p>
+                <div className="role-cycle">
+                  <span>I BUILD</span>
+                  <div>
+                    <b>WEB APPLICATIONS</b>
+                    <b>APIs</b>
+                    <b>BACKEND SYSTEMS</b>
+                    <b>INTERACTIVE PRODUCTS</b>
                   </div>
                 </div>
+                <div className="hero-actions">
+                  <GlassLink href="#projects" primary>
+                    View Projects <ArrowUpRight size={17} />
+                  </GlassLink>
+                  <GlassLink href="/cv/Thanh-Nha-CV.pdf">
+                    Download CV <Download size={16} />
+                  </GlassLink>
+                  <GlassLink href="https://github.com/NgThanhNha147">
+                    <Github size={17} /> GitHub
+                  </GlassLink>
+                </div>
               </div>
-            </MonitorExperience>
-          </Suspense>
-        )}
+            </div>
+          </MonitorExperience>
+        </Suspense>
         <Section id="about" number="01" title={t.nav[1]}>
           <div className="about-grid">
             <figure

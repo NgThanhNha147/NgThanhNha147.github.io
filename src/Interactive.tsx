@@ -29,16 +29,16 @@ export function Cursor() {
   const dot = useRef<HTMLDivElement>(null),
     ring = useRef<HTMLDivElement>(null);
   useEffect(() => {
-    let x = 0,
-      y = 0,
-      rx = 0,
-      ry = 0,
+    let x = -100,
+      y = -100,
+      rx = -100,
+      ry = -100,
       raf = 0;
     const move = (e: PointerEvent) => {
       x = e.clientX;
       y = e.clientY;
       const interactive = (e.target as HTMLElement).closest(
-        "a,button,.cursor-view",
+        "a,button,.cursor-view,.screen-portal",
       );
       ring.current?.classList.toggle("interactive", Boolean(interactive));
       ring.current?.classList.toggle(

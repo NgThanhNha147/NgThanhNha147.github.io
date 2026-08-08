@@ -17,7 +17,7 @@ for (const profile of [
   });
   page.on("pageerror", (error) => errors.push(error.message));
   await page.goto(baseUrl, { waitUntil: "networkidle" });
-  const introText = (await page.locator(".intro-name").textContent())
+  const introText = (await page.locator(".screen-loader-name").textContent())
     ?.replace(/\s+/g, "")
     .trim();
   if (profile.name === "compact") {
@@ -27,8 +27,8 @@ for (const profile of [
     await page.screenshot({ path: "artifacts/intro-assembly.png" });
   }
   await page
-    .locator(".intro-loader")
-    .waitFor({ state: "detached", timeout: 12000 });
+    .locator(".monitor-experience:not(.state-loading)")
+    .waitFor({ timeout: 12000 });
   await page.locator(".monitor-canvas").waitFor({ timeout: 12000 });
   await page.waitForTimeout(250);
   await page.screenshot({ path: `artifacts/${profile.name}-hero.png` });
@@ -92,8 +92,8 @@ for (const profile of [
     const started = Date.now();
     await page.reload({ waitUntil: "domcontentloaded" });
     await page
-      .locator(".intro-loader")
-      .waitFor({ state: "detached", timeout: 3000 });
+      .locator(".monitor-experience:not(.state-loading)")
+      .waitFor({ timeout: 5000 });
     returnIntroMs = Date.now() - started;
   }
   results.push({
@@ -117,8 +117,8 @@ const reducedPage = await reducedContext.newPage();
 await reducedPage.goto(baseUrl, { waitUntil: "networkidle" });
 const reducedStarted = Date.now();
 await reducedPage
-  .locator(".intro-loader")
-  .waitFor({ state: "detached", timeout: 5000 });
+  .locator(".monitor-experience:not(.state-loading)")
+  .waitFor({ timeout: 5000 });
 const reducedIntroMs = Date.now() - reducedStarted;
 const reducedMotion = await reducedPage.evaluate(() => ({
   cursorHidden:
