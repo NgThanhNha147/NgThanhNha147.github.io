@@ -17,7 +17,9 @@ export default function Navigation({
 }) {
   const [open, setOpen] = useState(false);
   return (
-    <header className={`nav glass ${open ? "menu-open" : ""}`}>
+    <header
+      className={`nav glass ${open ? "menu-open" : ""} ${active > 0 ? "scrolled" : ""}`}
+    >
       <a className="brand" href="#home">
         TN<span>.</span>
       </a>

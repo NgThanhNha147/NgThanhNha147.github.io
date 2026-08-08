@@ -15,7 +15,8 @@ function DeveloperCore() {
     [],
   );
   useFrame(({ pointer, clock }) => {
-    if (!group.current) return;
+    if (!group.current || document.hidden) return;
+    const scroll = Math.min(window.scrollY / window.innerHeight, 1);
     group.current.rotation.y += 0.002;
     group.current.rotation.x = THREE.MathUtils.lerp(
       group.current.rotation.x,
@@ -28,6 +29,12 @@ function DeveloperCore() {
       0.03,
     );
     group.current.position.y = Math.sin(clock.elapsedTime * 0.5) * 0.08;
+    group.current.position.z = THREE.MathUtils.lerp(
+      group.current.position.z,
+      -scroll * 0.8,
+      0.05,
+    );
+    group.current.scale.setScalar(1 - scroll * 0.22);
   });
   return (
     <group ref={group}>

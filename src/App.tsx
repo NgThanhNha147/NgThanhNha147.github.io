@@ -36,6 +36,21 @@ const ids = [
 ];
 const ThreeHero = lazy(() => import("./ThreeHero"));
 
+function LoaderCounter() {
+  const [progress, setProgress] = useState(0);
+  useEffect(() => {
+    const started = performance.now();
+    let raf = 0;
+    const tick = (now: number) => {
+      setProgress(Math.min(100, Math.round(((now - started) / 1150) * 100)));
+      if (now - started < 1150) raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, []);
+  return <>{progress.toString().padStart(3, "0")}</>;
+}
+
 function GlassLink({
   href,
   children,
@@ -86,6 +101,7 @@ function Section({
 }
 
 export default function App() {
+  const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
   const [lang, setLang] = useState<Language>(
       () => (localStorage.getItem("portfolio-language") as Language) || "en",
     ),
@@ -190,7 +206,9 @@ export default function App() {
     >
       <div className="loader">
         <span>INITIALIZING PORTFOLIO</span>
-        <strong>100</strong>
+        <strong>
+          <LoaderCounter />
+        </strong>
         <div />
       </div>
       <Cursor />
@@ -227,7 +245,7 @@ export default function App() {
           <div className="timeline-fill" />
         </div>
         <section id="home" className="hero section" ref={heroRef}>
-          {loaded && heroVisible && (
+          {loaded && heroVisible && !reducedMotion && (
             <Suspense fallback={<div className="three-fallback" />}>
               <ThreeHero />
             </Suspense>
@@ -344,7 +362,11 @@ export default function App() {
               <div className={`skill-group group-${gi}`} key={group}>
                 <h3>{group}</h3>
                 {skills.map((s, i) => (
-                  <button style={{ "--skill-i": i } as CSSProperties} key={s}>
+                  <button
+                    title={`${s} · ${group}`}
+                    style={{ "--skill-i": i } as CSSProperties}
+                    key={s}
+                  >
                     {s}
                   </button>
                 ))}
@@ -367,6 +389,11 @@ export default function App() {
         </Section>
         <Section id="contact" number="06" title={t.nav[6]} wide>
           <div className="contact-final">
+            <div className="contact-particles" aria-hidden="true">
+              {Array.from({ length: 14 }, (_, i) => (
+                <i key={i} style={{ "--particle": i } as CSSProperties} />
+              ))}
+            </div>
             <div className="contact-orb" />
             <p>OPEN TO FULL-STACK OPPORTUNITIES</p>
             <h2>{t.contact}</h2>

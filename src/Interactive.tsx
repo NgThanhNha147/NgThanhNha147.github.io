@@ -47,6 +47,14 @@ export function Cursor() {
       );
       document.documentElement.style.setProperty("--cursor-x", `${x}px`);
       document.documentElement.style.setProperty("--cursor-y", `${y}px`);
+      document.documentElement.style.setProperty(
+        "--parallax-x",
+        `${(x / innerWidth - 0.5) * 18}px`,
+      );
+      document.documentElement.style.setProperty(
+        "--parallax-y",
+        `${(y / innerHeight - 0.5) * 12}px`,
+      );
     };
     const loop = () => {
       rx += (x - rx) * 0.16;

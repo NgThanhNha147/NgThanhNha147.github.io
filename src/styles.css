@@ -1350,6 +1350,89 @@ footer p {
   color: #d9f7f5;
   font-weight: 500;
 }
+.nav.scrolled {
+  background: rgba(5, 20, 35, 0.78);
+  border-color: rgba(53, 232, 218, 0.22);
+  box-shadow:
+    0 16px 55px rgba(0, 0, 0, 0.35),
+    inset 0 1px rgba(255, 255, 255, 0.12);
+}
+.floating-code {
+  transform: translate3d(var(--parallax-x, 0), var(--parallax-y, 0), 0);
+  transition: transform 0.65s var(--ease);
+}
+.portrait::before {
+  content: "";
+  position: absolute;
+  inset: -14px;
+  border-radius: inherit;
+  border: 1px dashed rgba(53, 232, 218, 0.28);
+  animation: halo 18s linear infinite;
+  pointer-events: none;
+}
+@keyframes halo {
+  to {
+    transform: rotate(360deg);
+  }
+}
+.skill-group:hover button {
+  border-color: rgba(53, 232, 218, 0.28);
+  color: #d9f7f5;
+}
+.skill-group:hover button:hover {
+  color: #021118;
+}
+.skill-group button {
+  transition-delay: calc(var(--skill-i) * 18ms);
+}
+.contact-particles {
+  position: absolute;
+  width: 620px;
+  height: 620px;
+  pointer-events: none;
+  z-index: -1;
+}
+.contact-particles i {
+  --a: calc(var(--particle) * 25.7deg);
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: var(--cyan);
+  box-shadow: 0 0 12px var(--cyan);
+  transform: rotate(var(--a)) translateX(280px);
+  animation: gather calc(5s + var(--particle) * 0.12s) ease-in-out infinite
+    alternate;
+}
+@keyframes gather {
+  to {
+    transform: rotate(var(--a)) translateX(155px);
+    opacity: 0.25;
+  }
+}
+.click-burst::before,
+.click-burst::after {
+  content: "";
+  position: absolute;
+  inset: 50%;
+  width: 3px;
+  height: 3px;
+  background: var(--cyan);
+  border-radius: 50%;
+  box-shadow:
+    18px -9px var(--cyan),
+    -16px 12px var(--cyan),
+    8px 19px var(--cyan);
+  animation: click-particles 0.65s ease-out forwards;
+}
+@keyframes click-particles {
+  to {
+    transform: scale(2.5);
+    opacity: 0;
+  }
+}
 @keyframes roles {
   to {
     transform: translateY(-104px);
