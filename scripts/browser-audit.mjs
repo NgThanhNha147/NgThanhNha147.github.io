@@ -2,6 +2,7 @@ import { chromium } from "playwright";
 import AxeBuilder from "@axe-core/playwright";
 
 const browser = await chromium.launch({ headless: true });
+const baseUrl = process.env.PORTFOLIO_URL ?? "http://127.0.0.1:4173";
 const results = [];
 for (const profile of [
   { name: "desktop", viewport: { width: 1440, height: 1000 } },
@@ -14,7 +15,7 @@ for (const profile of [
     if (message.type() === "error") errors.push(message.text());
   });
   page.on("pageerror", (error) => errors.push(error.message));
-  await page.goto("http://127.0.0.1:4173", { waitUntil: "networkidle" });
+  await page.goto(baseUrl, { waitUntil: "networkidle" });
   await page.waitForTimeout(1700);
   const accessibility = await new AxeBuilder({ page }).analyze();
   const seriousA11y = accessibility.violations.filter((violation) =>
@@ -87,7 +88,7 @@ const reducedContext = await browser.newContext({
   reducedMotion: "reduce",
 });
 const reducedPage = await reducedContext.newPage();
-await reducedPage.goto("http://127.0.0.1:4173", { waitUntil: "networkidle" });
+await reducedPage.goto(baseUrl, { waitUntil: "networkidle" });
 const reducedMotion = await reducedPage.evaluate(() => ({
   cursorHidden:
     getComputedStyle(document.querySelector(".cursor-ring")).display === "none",
