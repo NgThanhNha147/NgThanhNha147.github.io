@@ -2,7 +2,6 @@ import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { ContactShadows, RoundedBox } from "@react-three/drei";
 import {
   useEffect,
-  useMemo,
   useRef,
   useState,
   type CSSProperties,
@@ -14,49 +13,6 @@ import * as THREE from "three";
 type IntroState = "loading" | "ready" | "entering" | "entered";
 
 const loaderWords = ["WORK", "WITH", "TNKAX"];
-
-function BentBox({
-  width,
-  height,
-  depth,
-  curve,
-  color,
-  roughness,
-  metalness = 0,
-}: {
-  width: number;
-  height: number;
-  depth: number;
-  curve: number;
-  color: string;
-  roughness: number;
-  metalness?: number;
-}) {
-  const geometry = useMemo(() => {
-    const result = new THREE.BoxGeometry(width, height, depth, 64, 4, 4);
-    const positions = result.attributes.position;
-    for (let index = 0; index < positions.count; index += 1) {
-      const x = positions.getX(index);
-      const normalized = x / (width / 2);
-      positions.setZ(index, positions.getZ(index) + curve * normalized ** 2);
-    }
-    positions.needsUpdate = true;
-    result.computeVertexNormals();
-    return result;
-  }, [curve, depth, height, width]);
-
-  useEffect(() => () => geometry.dispose(), [geometry]);
-
-  return (
-    <mesh geometry={geometry} castShadow receiveShadow>
-      <meshStandardMaterial
-        color={color}
-        roughness={roughness}
-        metalness={metalness}
-      />
-    </mesh>
-  );
-}
 
 function Keyboard() {
   const keys = Array.from({ length: 55 });
@@ -250,15 +206,19 @@ function StudioBackdrop() {
 function Monitor() {
   return (
     <group position={[0, 0.9, 0]}>
-      <BentBox
-        width={7.75}
-        height={3.5}
-        depth={0.24}
-        curve={0.28}
-        color="#151515"
-        roughness={0.3}
-        metalness={0.74}
-      />
+      <RoundedBox
+        args={[7.75, 3.5, 0.24]}
+        radius={0.1}
+        smoothness={5}
+        castShadow
+        receiveShadow
+      >
+        <meshStandardMaterial
+          color="#151515"
+          roughness={0.3}
+          metalness={0.74}
+        />
+      </RoundedBox>
       <mesh position={[0, 0, 0.19]}>
         <planeGeometry args={[7.46, 3.25, 64, 1]} />
         <meshStandardMaterial color="#f9f9f7" roughness={0.82} />
@@ -525,6 +485,7 @@ export default function MonitorExperience({
       }
 
       const eased = THREE.MathUtils.smootherstep(next, 0, 1);
+      const expansion = eased * eased;
       const mobile = innerWidth < 700;
       const initialWidth = Math.min(
         innerWidth * (mobile ? 0.78 : 0.61),
@@ -535,14 +496,18 @@ export default function MonitorExperience({
       const width = THREE.MathUtils.lerp(
         initialWidth,
         innerWidth * 1.04,
-        eased,
+        expansion,
       );
       const height = THREE.MathUtils.lerp(
         initialHeight,
         innerHeight * 1.04,
-        eased,
+        expansion,
       );
-      const top = THREE.MathUtils.lerp(initialTop, -innerHeight * 0.02, eased);
+      const top = THREE.MathUtils.lerp(
+        initialTop,
+        -innerHeight * 0.02,
+        expansion,
+      );
       const left = (innerWidth - width) / 2;
 
       element.style.setProperty("--monitor-progress", String(next));
@@ -552,7 +517,11 @@ export default function MonitorExperience({
       element.style.setProperty("--screen-height", `${height}px`);
       element.style.setProperty(
         "--screen-radius",
-        `${THREE.MathUtils.lerp(6, 0, eased)}px`,
+        `${THREE.MathUtils.lerp(8, 0, expansion)}px`,
+      );
+      element.style.setProperty(
+        "--monitor-scene-opacity",
+        String(1 - THREE.MathUtils.clamp((next - 0.56) / 0.12, 0, 1)),
       );
       element.style.setProperty(
         "--loader-opacity",

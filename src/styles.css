@@ -548,7 +548,7 @@ main {
   min-height: 100%;
 }
 .monitor-real-hero .hero-copy {
-  opacity: 1;
+  opacity: var(--monitor-scene-opacity, 1);
   transform: translateY(calc((1 - var(--monitor-dom-opacity, 0)) * 34px));
   clip-path: none;
   transition: none;
@@ -2437,8 +2437,9 @@ html[data-theme="dark"] .education p {
   position: absolute;
   inset: 0;
   z-index: 1;
-  opacity: 1;
+  opacity: var(--monitor-scene-opacity, 1);
   transform: none;
+  transition: opacity 0.12s linear;
 }
 .screen-portal {
   position: fixed;
@@ -2448,7 +2449,7 @@ html[data-theme="dark"] .education p {
   width: var(--screen-width, 60vw);
   height: var(--screen-height, 26vw);
   overflow: hidden;
-  border-radius: 50% / var(--screen-radius, 10px);
+  border-radius: var(--screen-radius, 8px);
   color: #111;
   background:
     linear-gradient(rgba(0, 0, 0, 0.022) 1px, transparent 1px),
@@ -2461,8 +2462,7 @@ html[data-theme="dark"] .education p {
     inset -16px 0 24px
       rgba(0, 0, 0, calc((1 - var(--monitor-progress, 0)) * 0.025));
   opacity: var(--portal-exit-opacity, 1);
-  transform: perspective(1800px)
-    rotateY(calc((1 - var(--monitor-progress, 0)) * -0.7deg));
+  transform: none;
   transform-origin: center;
   will-change: left, top, width, height, border-radius, transform;
 }
