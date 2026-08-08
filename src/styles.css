@@ -587,8 +587,8 @@ main {
 }
 .scroll-cue {
   position: absolute;
-  bottom: 0;
-  left: 8vw;
+  bottom: 120px;
+  left: 50%;
   transform: translateX(-50%);
   font: 500 9px DM Mono;
   letter-spacing: 0.2em;
@@ -596,6 +596,22 @@ main {
   display: grid;
   gap: 9px;
   place-items: center;
+}
+.hero-timeline-connector {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 120px;
+  overflow: visible;
+  pointer-events: none;
+  z-index: 4;
+}
+.hero-timeline-connector path {
+  fill: none;
+  stroke: var(--cyan);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
 }
 .scroll-cue i {
   width: 1px;
@@ -1331,8 +1347,8 @@ html:not([data-theme="dark"]) .page-transition {
   .timeline-rail {
     left: 25px;
   }
-  .scroll-cue {
-    left: 25px;
+  .hero-timeline-connector path {
+    d: path("M 500 0 C 500 70, 31.25 45, 31.25 120");
   }
   .content-section,
   .content-section.wide {
@@ -1803,6 +1819,9 @@ html:not([data-theme="dark"]) .scroll-cue {
 html:not([data-theme="dark"]) .scroll-cue i {
   background: #111;
 }
+html:not([data-theme="dark"]) .hero-timeline-connector path {
+  stroke: #111;
+}
 html:not([data-theme="dark"]) .glass-button.primary {
   color: #fff;
   background: #111;
@@ -2074,7 +2093,8 @@ html[data-theme="dark"] .goal-card:hover {
 }
 
 @media (max-width: 560px) {
-  .scroll-cue {
+  .scroll-cue,
+  .hero-timeline-connector {
     display: none;
   }
 }

@@ -242,6 +242,14 @@ export default function App() {
           <a href="#about" className="scroll-cue">
             SCROLL <i />
           </a>
+          <svg
+            className="hero-timeline-connector"
+            viewBox="0 0 1000 120"
+            preserveAspectRatio="none"
+            aria-hidden="true"
+          >
+            <path d="M 500 0 C 500 70, 80 45, 80 120" />
+          </svg>
         </section>
         <Section id="about" number="01" title={t.nav[1]}>
           <div className="about-grid">
