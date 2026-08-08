@@ -16,9 +16,12 @@
 }
 html {
   scroll-behavior: auto;
-  filter: grayscale(1) contrast(1.04);
+  color-scheme: light;
   max-width: 100%;
   overflow-x: clip;
+}
+html[data-theme="dark"] {
+  color-scheme: dark;
 }
 body {
   margin: 0;
@@ -42,6 +45,8 @@ button {
 }
 .app {
   min-height: 100vh;
+  background: #050505;
+  color: #f4f4f1;
 }
 .glass {
   background: linear-gradient(
@@ -357,7 +362,8 @@ button {
   border-color: rgba(53, 232, 218, 0.2);
 }
 .language,
-.nav-github {
+.nav-github,
+.theme-toggle {
   border: 0;
   background: rgba(255, 255, 255, 0.05);
   border-radius: 18px;
@@ -367,6 +373,13 @@ button {
 }
 .nav-github {
   width: 38px;
+  padding: 0;
+  display: grid;
+  place-items: center;
+}
+.theme-toggle {
+  width: 38px;
+  flex: 0 0 38px;
   padding: 0;
   display: grid;
   place-items: center;
@@ -1129,6 +1142,141 @@ footer p {
   color: #6f8f9e;
   font: 400 9px DM Mono;
 }
+
+/* Light is the default presentation; dark is enabled only by the theme toggle. */
+html:not([data-theme="dark"]) {
+  --cyan: #111;
+  --blue: #555;
+  --line: rgba(0, 0, 0, 0.14);
+  --glass: rgba(255, 255, 255, 0.76);
+}
+html:not([data-theme="dark"]) body {
+  color: #111;
+  background:
+    radial-gradient(circle at 74% 10%, #e7e7e4 0, transparent 31%),
+    radial-gradient(circle at 9% 52%, #f0f0ed 0, transparent 28%),
+    linear-gradient(145deg, #fff, #f4f4f1 48%, #fff);
+}
+html:not([data-theme="dark"]) .app {
+  color: #111;
+  background:
+    radial-gradient(circle at 74% 10%, #e7e7e4 0, transparent 31%),
+    radial-gradient(circle at 9% 52%, #f0f0ed 0, transparent 28%),
+    linear-gradient(145deg, #fff, #f4f4f1 48%, #fff);
+}
+html:not([data-theme="dark"]) .glass {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.9),
+    rgba(238, 238, 235, 0.72)
+  );
+  border-color: rgba(0, 0, 0, 0.14);
+  box-shadow:
+    inset 0 1px 0 #fff,
+    0 18px 60px rgba(0, 0, 0, 0.08);
+}
+html:not([data-theme="dark"]) .ambient {
+  background: radial-gradient(circle, rgba(0, 0, 0, 0.055), transparent 66%);
+}
+html:not([data-theme="dark"]) .app::before {
+  background-image:
+    linear-gradient(rgba(0, 0, 0, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.035) 1px, transparent 1px);
+}
+html:not([data-theme="dark"]) .intro-loader {
+  background:
+    radial-gradient(circle at 50% 48%, rgba(0, 0, 0, 0.055), transparent 37%),
+    linear-gradient(145deg, #fff, #f2f2ef 58%, #fff);
+}
+html:not([data-theme="dark"]) .intro-grid {
+  background-image:
+    linear-gradient(rgba(0, 0, 0, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.05) 1px, transparent 1px);
+}
+html:not([data-theme="dark"]) .intro-code,
+html:not([data-theme="dark"]) .intro-glyph {
+  color: rgba(0, 0, 0, 0.38);
+  text-shadow: none;
+}
+html:not([data-theme="dark"]) .intro-ambient {
+  background: radial-gradient(circle, rgba(0, 0, 0, 0.07), transparent 63%);
+}
+html:not([data-theme="dark"]) .intro-name {
+  color: #222;
+  text-shadow: none;
+}
+html:not([data-theme="dark"]) .intro-letter::after {
+  -webkit-text-stroke-color: rgba(0, 0, 0, 0.2);
+}
+html:not([data-theme="dark"]) .intro-pulse {
+  border-color: rgba(0, 0, 0, 0.28);
+}
+html:not([data-theme="dark"]) .intro-role {
+  color: rgba(0, 0, 0, 0.82);
+}
+html:not([data-theme="dark"]) .intro-ready {
+  color: #666;
+}
+html:not([data-theme="dark"]) .nav nav a,
+html:not([data-theme="dark"]) .hero p,
+html:not([data-theme="dark"]) .project-content p,
+html:not([data-theme="dark"]) .goal-card p,
+html:not([data-theme="dark"]) .education p,
+html:not([data-theme="dark"]) .contact-copy,
+html:not([data-theme="dark"]) footer p {
+  color: #555;
+}
+html:not([data-theme="dark"]) .nav nav a.active,
+html:not([data-theme="dark"]) .nav nav a:hover {
+  color: #050505;
+}
+html:not([data-theme="dark"]) .nav-indicator,
+html:not([data-theme="dark"]) .nav nav a::after {
+  background: rgba(0, 0, 0, 0.055);
+  border-color: rgba(0, 0, 0, 0.12);
+}
+html:not([data-theme="dark"]) .language,
+html:not([data-theme="dark"]) .nav-github,
+html:not([data-theme="dark"]) .theme-toggle,
+html:not([data-theme="dark"]) .menu-toggle {
+  background: rgba(0, 0, 0, 0.055);
+  color: #111;
+}
+html:not([data-theme="dark"]) .three-scene {
+  filter: invert(1);
+}
+html:not([data-theme="dark"]) .cursor-dot {
+  background: #111;
+  box-shadow: none;
+}
+html:not([data-theme="dark"]) .cursor-ring {
+  border-color: rgba(0, 0, 0, 0.42);
+  background: rgba(0, 0, 0, 0.025);
+}
+html:not([data-theme="dark"]) .project-visual {
+  background:
+    radial-gradient(circle at 60% 40%, rgba(0, 0, 0, 0.08), transparent 40%),
+    linear-gradient(145deg, #f4f4f1, #deded9);
+}
+html:not([data-theme="dark"]) .project-window {
+  background: rgba(255, 255, 255, 0.84);
+  border-color: rgba(0, 0, 0, 0.16);
+  box-shadow: 0 35px 80px rgba(0, 0, 0, 0.12);
+}
+html:not([data-theme="dark"]) .tags span,
+html:not([data-theme="dark"]) .skill-group button {
+  color: #444;
+  border-color: rgba(0, 0, 0, 0.13);
+  background: rgba(255, 255, 255, 0.72);
+}
+html:not([data-theme="dark"]) .skill-core {
+  background: radial-gradient(circle, rgba(0, 0, 0, 0.06), transparent 70%);
+  border-color: rgba(0, 0, 0, 0.2);
+  box-shadow: none;
+}
+html:not([data-theme="dark"]) .page-transition {
+  background: #111;
+}
 @keyframes marquee {
   to {
     transform: translateX(-50%);
@@ -1366,15 +1514,15 @@ footer p {
   z-index: 1800;
   inset: 0;
   background: radial-gradient(
-    circle at var(--cursor-x) var(--cursor-y),
+    circle at var(--cursor-x, 50vw) var(--cursor-y, 50vh),
     #0b5b68,
     #020817 52%
   );
-  clip-path: circle(0 at var(--cursor-x) var(--cursor-y));
+  clip-path: circle(0 at var(--cursor-x, 50vw) var(--cursor-y, 50vh));
   pointer-events: none;
 }
 .leaving .page-transition {
-  clip-path: circle(150vmax at var(--cursor-x) var(--cursor-y));
+  clip-path: circle(150vmax at var(--cursor-x, 50vw) var(--cursor-y, 50vh));
   transition: clip-path 0.45s var(--ease);
 }
 .menu-toggle {
@@ -1475,6 +1623,18 @@ footer p {
   }
   .menu-toggle {
     display: grid;
+    flex: 0 0 38px;
+  }
+  .nav {
+    justify-content: flex-start;
+    gap: 8px;
+    left: 16px;
+    right: auto;
+    width: calc(100dvw - 32px);
+    transform: none;
+  }
+  .nav .brand {
+    margin-right: auto;
   }
   .nav.menu-open {
     height: auto;
@@ -1615,4 +1775,57 @@ footer p {
   to {
     transform: translateY(-104px);
   }
+}
+
+html:not([data-theme="dark"]) .floating-code code,
+html:not([data-theme="dark"]) .role-cycle,
+html:not([data-theme="dark"]) .role-cycle > span,
+html:not([data-theme="dark"]) .role-cycle b,
+html:not([data-theme="dark"]) .terminal,
+html:not([data-theme="dark"]) .terminal b,
+html:not([data-theme="dark"]) .scroll-cue {
+  color: #555;
+}
+html:not([data-theme="dark"]) .glass-button.primary {
+  color: #fff;
+  background: #111;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.14);
+}
+html:not([data-theme="dark"]) .glass-button:hover {
+  background: #222;
+  border-color: #222;
+  color: #fff;
+  box-shadow: none;
+}
+html:not([data-theme="dark"]) .nav.scrolled {
+  background: rgba(255, 255, 255, 0.86);
+  border-color: rgba(0, 0, 0, 0.14);
+}
+html[data-theme="dark"] .floating-code code,
+html[data-theme="dark"] .role-cycle,
+html[data-theme="dark"] .role-cycle > span,
+html[data-theme="dark"] .role-cycle b {
+  color: #aaa;
+}
+html[data-theme="dark"] .glass-button.primary {
+  color: #111;
+  background: #f4f4f1;
+  box-shadow: 0 12px 32px rgba(255, 255, 255, 0.1);
+}
+html[data-theme="dark"] .nav,
+html[data-theme="dark"] .terminal,
+html[data-theme="dark"] .cursor-ring {
+  border-color: rgba(255, 255, 255, 0.18);
+}
+html[data-theme="dark"] .nav-indicator,
+html[data-theme="dark"] .nav nav a::after,
+html[data-theme="dark"] .language,
+html[data-theme="dark"] .nav-github,
+html[data-theme="dark"] .theme-toggle,
+html[data-theme="dark"] .menu-toggle {
+  background: rgba(255, 255, 255, 0.07);
+  border-color: rgba(255, 255, 255, 0.14);
+}
+html[data-theme="dark"] .cursor-dot {
+  box-shadow: none;
 }

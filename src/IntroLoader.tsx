@@ -50,6 +50,7 @@ export default function IntroLoader({
     if (!element) return;
     const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
     const mobile = matchMedia("(max-width: 700px)").matches;
+    const darkTheme = document.documentElement.dataset.theme === "dark";
     const returning =
       sessionStorage.getItem("work-with-tnkax-intro-seen") === "1";
     document.body.style.overflow = "hidden";
@@ -175,8 +176,10 @@ export default function IntroLoader({
         .to(
           ".intro-name",
           {
-            color: "#ffffff",
-            textShadow: "0 0 30px rgba(255,255,255,.2)",
+            color: darkTheme ? "#ffffff" : "#111111",
+            textShadow: darkTheme
+              ? "0 0 30px rgba(255,255,255,.2)"
+              : "0 0 24px rgba(0,0,0,.12)",
             duration: 0.24,
           },
           3.08,

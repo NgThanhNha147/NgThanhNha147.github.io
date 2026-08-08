@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Code2, Menu, X } from "lucide-react";
+import { Code2, Menu, Moon, Sun, X } from "lucide-react";
 import type { Language } from "./content";
 
 export default function Navigation({
@@ -8,12 +8,16 @@ export default function Navigation({
   active,
   lang,
   onLanguage,
+  theme,
+  onTheme,
 }: {
   ids: string[];
   labels: string[];
   active: number;
   lang: Language;
   onLanguage: () => void;
+  theme: "light" | "dark";
+  onTheme: () => void;
 }) {
   const [open, setOpen] = useState(false);
   return (
@@ -48,6 +52,13 @@ export default function Navigation({
         aria-label="Switch language"
       >
         {lang.toUpperCase()} / {lang === "en" ? "VI" : "EN"}
+      </button>
+      <button
+        className="theme-toggle"
+        onClick={onTheme}
+        aria-label={`Switch to ${theme === "light" ? "dark" : "light"} theme`}
+      >
+        {theme === "light" ? <Moon size={17} /> : <Sun size={17} />}
       </button>
       <a
         className="nav-github"

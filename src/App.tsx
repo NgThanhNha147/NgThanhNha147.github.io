@@ -94,6 +94,7 @@ export default function App() {
     [active, setActive] = useState(0),
     [loaded, setLoaded] = useState(false);
   const [leaving, setLeaving] = useState(false);
+  const [theme, setTheme] = useState<"light" | "dark">("light");
   const [languageChanging, setLanguageChanging] = useState(false);
   const [heroVisible, setHeroVisible] = useState(true);
   const heroRef = useRef<HTMLElement>(null);
@@ -119,6 +120,9 @@ export default function App() {
     return () => observer.disconnect();
   }, []);
   useEffect(() => localStorage.setItem("portfolio-language", lang), [lang]);
+  useEffect(() => {
+    document.documentElement.dataset.theme = theme;
+  }, [theme]);
   useEffect(() => {
     const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
     const lenis = new Lenis({
@@ -203,6 +207,10 @@ export default function App() {
         labels={t.nav}
         active={active}
         lang={lang}
+        theme={theme}
+        onTheme={() =>
+          setTheme((value) => (value === "light" ? "dark" : "light"))
+        }
         onLanguage={() => {
           setLanguageChanging(true);
           setTimeout(() => setLang((v) => (v === "en" ? "vi" : "en")), 130);
