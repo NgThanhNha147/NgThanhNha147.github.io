@@ -1,6 +1,4 @@
 import {
-  lazy,
-  Suspense,
   useEffect,
   useMemo,
   useRef,
@@ -35,8 +33,6 @@ const ids = [
   "education",
   "contact",
 ];
-const ThreeHero = lazy(() => import("./ThreeHero"));
-
 function GlassLink({
   href,
   children,
@@ -87,7 +83,6 @@ function Section({
 }
 
 export default function App() {
-  const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
   const [lang, setLang] = useState<Language>(
       () => (localStorage.getItem("portfolio-language") as Language) || "en",
     ),
@@ -96,8 +91,6 @@ export default function App() {
   const [leaving, setLeaving] = useState(false);
   const [theme, setTheme] = useState<"light" | "dark">("light");
   const [languageChanging, setLanguageChanging] = useState(false);
-  const [heroVisible, setHeroVisible] = useState(true);
-  const heroRef = useRef<HTMLElement>(null);
   const timeline = useRef<HTMLElement>(null),
     t = copy[lang];
   const code = useMemo(
@@ -111,14 +104,6 @@ export default function App() {
     ],
     [],
   );
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => setHeroVisible(entry.isIntersecting),
-      { rootMargin: "180px" },
-    );
-    if (heroRef.current) observer.observe(heroRef.current);
-    return () => observer.disconnect();
-  }, []);
   useEffect(() => localStorage.setItem("portfolio-language", lang), [lang]);
   useEffect(() => {
     document.documentElement.dataset.theme = theme;
@@ -228,12 +213,7 @@ export default function App() {
         <div className="timeline-rail">
           <div className="timeline-fill" />
         </div>
-        <section id="home" className="hero section" ref={heroRef}>
-          {heroVisible && !reducedMotion && (
-            <Suspense fallback={<div className="three-fallback" />}>
-              <ThreeHero />
-            </Suspense>
-          )}
+        <section id="home" className="hero section">
           <div className="hero-copy">
             <p className="eyebrow">{t.eyebrow}</p>
             <h1>{t.title}</h1>
@@ -257,15 +237,6 @@ export default function App() {
               <GlassLink href="https://github.com/NgThanhNha147">
                 <Github size={17} /> GitHub
               </GlassLink>
-            </div>
-            <div className="terminal glass">
-              <Terminal size={16} />
-              <pre>
-                <b>&gt; whoami</b>
-                {"\n"}Thanh Nha{"\n"}
-                <b>&gt; stack</b>
-                {"\n"}.NET / Python / React
-              </pre>
             </div>
           </div>
           <a href="#about" className="scroll-cue">

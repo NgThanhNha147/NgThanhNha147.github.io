@@ -477,6 +477,7 @@ main {
   min-height: 100svh;
   display: flex;
   align-items: center;
+  justify-content: center;
   padding: 120px max(7vw, 32px);
 }
 .three-scene {
@@ -490,7 +491,8 @@ main {
 .hero-copy {
   position: relative;
   z-index: 3;
-  width: min(720px, 58vw);
+  width: min(900px, 100%);
+  text-align: center;
 }
 .eyebrow {
   font: 500 13px DM Mono;
@@ -517,6 +519,8 @@ main {
   line-height: 1.75;
   color: #9db3bf;
   max-width: 650px;
+  margin-left: auto;
+  margin-right: auto;
   transform: translateY(30px);
   opacity: 0;
   animation: hero-in 0.9s var(--ease) 1.85s forwards;
@@ -530,6 +534,7 @@ main {
 }
 .hero-actions {
   display: flex;
+  justify-content: center;
   gap: 12px;
   margin-top: 36px;
   flex-wrap: wrap;
@@ -1303,7 +1308,7 @@ html:not([data-theme="dark"]) .page-transition {
   }
   .hero {
     padding: 110px 24px 70px;
-    align-items: flex-end;
+    align-items: center;
   }
   .hero-copy {
     width: 100%;
@@ -1673,6 +1678,7 @@ html:not([data-theme="dark"]) .page-transition {
   display: flex;
   gap: 10px;
   align-items: flex-start;
+  justify-content: center;
   overflow: hidden;
   font: 500 11px DM Mono;
   margin-top: 24px;
