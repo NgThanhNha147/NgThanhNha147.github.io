@@ -245,11 +245,42 @@ export default function App() {
         </section>
         <Section id="about" number="01" title={t.nav[1]}>
           <div className="about-grid">
-            <figure className="about-photo">
-              <img
-                src="/images/thanh-nha-developer.png"
-                alt="Thanh Nha working at a developer desk"
-              />
+            <figure
+              className="about-photo"
+              onMouseMove={(event) => {
+                const rect = event.currentTarget.getBoundingClientRect();
+                const x = (event.clientX - rect.left) / rect.width - 0.5;
+                const y = (event.clientY - rect.top) / rect.height - 0.5;
+                event.currentTarget.style.setProperty(
+                  "--photo-ry",
+                  `${x * 8}deg`,
+                );
+                event.currentTarget.style.setProperty(
+                  "--photo-rx",
+                  `${y * -7}deg`,
+                );
+                event.currentTarget.style.setProperty(
+                  "--photo-x",
+                  `${x * 10}px`,
+                );
+                event.currentTarget.style.setProperty(
+                  "--photo-y",
+                  `${y * 8}px`,
+                );
+              }}
+              onMouseLeave={(event) => {
+                event.currentTarget.style.removeProperty("--photo-ry");
+                event.currentTarget.style.removeProperty("--photo-rx");
+                event.currentTarget.style.removeProperty("--photo-x");
+                event.currentTarget.style.removeProperty("--photo-y");
+              }}
+            >
+              <div className="photo-motion">
+                <img
+                  src="/images/thanh-nha-developer.png"
+                  alt="Thanh Nha working at a developer desk"
+                />
+              </div>
               <span className="photo-skill skill-dotnet">.NET</span>
               <span className="photo-skill skill-python">PYTHON</span>
               <span className="photo-skill skill-react">REACT</span>
