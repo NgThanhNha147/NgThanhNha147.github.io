@@ -245,17 +245,12 @@ export default function App() {
         </section>
         <Section id="about" number="01" title={t.nav[1]}>
           <div className="about-grid">
-            <div className="portrait glass">
-              <div className="avatar">
-                <img
-                  src="/images/avatar-placeholder.svg"
-                  alt="Portrait placeholder for Thanh Nha"
-                />
-              </div>
-              <span className="orbit one">.NET</span>
-              <span className="orbit two">PYTHON</span>
-              <span className="orbit three">REACT</span>
-            </div>
+            <figure className="about-photo">
+              <img
+                src="/images/thanh-nha-developer.png"
+                alt="Thanh Nha working at a developer desk"
+              />
+            </figure>
             <div className="about-copy">
               <p>{t.about}</p>
               <div className="facts">
