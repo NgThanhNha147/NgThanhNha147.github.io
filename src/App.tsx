@@ -142,7 +142,7 @@ export default function App() {
           {
             y: 50,
             opacity: 0,
-            filter: "blur(3px)",
+            filter: "blur(0px)",
             clipPath: "inset(0 0 35% 0)",
           },
           {
@@ -150,7 +150,7 @@ export default function App() {
             opacity: 1,
             filter: "blur(0)",
             clipPath: "inset(0 0 0% 0)",
-            duration: reduced ? 0.01 : 1,
+            duration: reduced ? 0.01 : 0.82,
             ease: "power4.out",
             scrollTrigger: { trigger: el, start: "top 82%", once: true },
           },

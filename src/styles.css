@@ -75,7 +75,11 @@ button {
   left: 0;
   top: 0;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(0, 217, 255, 0.07), transparent 66%);
+  background: radial-gradient(
+    circle,
+    rgba(128, 128, 128, 0.07),
+    transparent 66%
+  );
   pointer-events: none;
   z-index: 0;
   transform: translate3d(
@@ -548,17 +552,17 @@ main {
   font: 600 12px DM Mono;
 }
 .glass-button:hover {
-  background: rgba(53, 232, 218, 0.1);
-  border-color: rgba(53, 232, 218, 0.45);
-  box-shadow: 0 0 28px rgba(53, 232, 218, 0.12);
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.45);
+  box-shadow: 0 0 28px rgba(255, 255, 255, 0.12);
 }
 .glass-button:active {
   transform: scale(0.96);
 }
 .glass-button.primary {
-  background: linear-gradient(135deg, #d9fffa, #7ef5e7);
+  background: linear-gradient(135deg, #fff, #d8d8d8);
   color: #03131c;
-  box-shadow: 0 0 34px rgba(53, 232, 218, 0.25);
+  box-shadow: 0 0 34px rgba(255, 255, 255, 0.16);
 }
 .terminal {
   display: flex;
@@ -1612,8 +1616,8 @@ html:not([data-theme="dark"]) .page-transition {
   pointer-events: none;
   z-index: 0;
   background-image:
-    linear-gradient(rgba(80, 220, 220, 0.025) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(80, 220, 220, 0.025) 1px, transparent 1px);
+    linear-gradient(rgba(128, 128, 128, 0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(128, 128, 128, 0.025) 1px, transparent 1px);
   background-size: 60px 60px;
   mask-image: linear-gradient(to bottom, #000, transparent 85%);
 }
@@ -1689,8 +1693,8 @@ html:not([data-theme="dark"]) .page-transition {
   font-weight: 500;
 }
 .nav.scrolled {
-  background: rgba(5, 20, 35, 0.78);
-  border-color: rgba(53, 232, 218, 0.22);
+  background: rgba(15, 15, 15, 0.82);
+  border-color: rgba(255, 255, 255, 0.18);
   box-shadow:
     0 16px 55px rgba(0, 0, 0, 0.35),
     inset 0 1px rgba(255, 255, 255, 0.12);
@@ -1704,7 +1708,7 @@ html:not([data-theme="dark"]) .page-transition {
   position: absolute;
   inset: -14px;
   border-radius: inherit;
-  border: 1px dashed rgba(53, 232, 218, 0.28);
+  border: 1px dashed rgba(255, 255, 255, 0.24);
   animation: halo 18s linear infinite;
   pointer-events: none;
 }
@@ -1714,11 +1718,11 @@ html:not([data-theme="dark"]) .page-transition {
   }
 }
 .skill-group:hover button {
-  border-color: rgba(53, 232, 218, 0.28);
-  color: #d9f7f5;
+  border-color: rgba(255, 255, 255, 0.28);
+  color: #f2f2f2;
 }
 .skill-group:hover button:hover {
-  color: #021118;
+  color: #111;
 }
 .skill-group button {
   transition-delay: calc(var(--skill-i) * 18ms);
@@ -1828,4 +1832,236 @@ html[data-theme="dark"] .menu-toggle {
 }
 html[data-theme="dark"] .cursor-dot {
   box-shadow: none;
+}
+
+html:not([data-theme="dark"]) .timeline-rail {
+  background: rgba(0, 0, 0, 0.16);
+}
+html:not([data-theme="dark"]) .timeline-fill {
+  background: #111;
+  box-shadow: none;
+}
+html:not([data-theme="dark"]) .timeline-node {
+  background: #fff;
+  border-color: #111;
+  box-shadow: 0 0 0 7px rgba(0, 0, 0, 0.035);
+}
+html:not([data-theme="dark"]) .timeline-node.active {
+  background: #111;
+  box-shadow: 0 0 0 9px rgba(0, 0, 0, 0.06);
+}
+html:not([data-theme="dark"]) .section-number {
+  -webkit-text-stroke-color: rgba(0, 0, 0, 0.05);
+}
+html:not([data-theme="dark"]) .section-heading i,
+html:not([data-theme="dark"]) .year i,
+html:not([data-theme="dark"]) .goal-connector {
+  background: linear-gradient(90deg, #111, transparent);
+}
+html:not([data-theme="dark"]) .avatar {
+  background: radial-gradient(circle at 35% 30%, #f5f5f2, #d8d8d4);
+  -webkit-text-stroke-color: rgba(0, 0, 0, 0.26);
+  box-shadow: 0 24px 65px rgba(0, 0, 0, 0.1);
+}
+html:not([data-theme="dark"]) .portrait::before {
+  border-color: rgba(0, 0, 0, 0.2);
+}
+html:not([data-theme="dark"]) .orbit {
+  color: #fff;
+  background: #111;
+  border-color: #111;
+  box-shadow: none;
+}
+html:not([data-theme="dark"]) .about-copy p,
+html:not([data-theme="dark"]) .facts span {
+  color: #555;
+}
+html:not([data-theme="dark"]) .goal-card:hover {
+  border-color: rgba(0, 0, 0, 0.28);
+}
+html:not([data-theme="dark"]) .goal-card > b {
+  -webkit-text-stroke-color: rgba(0, 0, 0, 0.22);
+}
+html:not([data-theme="dark"]) .goal-connector i {
+  background: #111;
+  box-shadow: none;
+}
+html:not([data-theme="dark"]) .project-card::before {
+  background: radial-gradient(
+    500px circle at var(--mx) var(--my),
+    rgba(0, 0, 0, 0.055),
+    transparent 42%
+  );
+}
+html:not([data-theme="dark"]) .project-card:hover {
+  border-color: rgba(0, 0, 0, 0.24);
+}
+html:not([data-theme="dark"]) .project-visual > span {
+  color: #666;
+}
+html:not([data-theme="dark"]) .project-window i {
+  background: #555;
+}
+html:not([data-theme="dark"]) .project-window strong {
+  -webkit-text-stroke-color: rgba(0, 0, 0, 0.32);
+}
+html:not([data-theme="dark"]) .project-content > a,
+html:not([data-theme="dark"]) .project-content > button,
+html:not([data-theme="dark"]) .skill-core span,
+html:not([data-theme="dark"]) .skill-group h3,
+html:not([data-theme="dark"]) .education > svg,
+html:not([data-theme="dark"]) .contact-final > p {
+  color: #333;
+}
+html:not([data-theme="dark"]) .skill-group button:hover {
+  color: #fff;
+  background: #111;
+  box-shadow: none;
+}
+html:not([data-theme="dark"]) .skill-group:hover button {
+  color: #444;
+  border-color: rgba(0, 0, 0, 0.18);
+}
+html:not([data-theme="dark"]) .skill-group:hover button:hover {
+  color: #fff;
+}
+html:not([data-theme="dark"]) .education > svg {
+  border-color: rgba(0, 0, 0, 0.17);
+}
+html:not([data-theme="dark"]) .contact-orb {
+  background: radial-gradient(circle, rgba(0, 0, 0, 0.07), transparent 65%);
+}
+html:not([data-theme="dark"]) .contact-particles i {
+  background: #777;
+  box-shadow: none;
+}
+html:not([data-theme="dark"]) .cursor-ring.interactive {
+  border-color: rgba(0, 0, 0, 0.6);
+  background: rgba(255, 255, 255, 0.7);
+}
+html[data-theme="dark"] .timeline-fill {
+  background: #f4f4f1;
+  box-shadow: none;
+}
+html[data-theme="dark"] .timeline-node,
+html[data-theme="dark"] .timeline-node.active {
+  border-color: #f4f4f1;
+  box-shadow: 0 0 0 7px rgba(255, 255, 255, 0.05);
+}
+html[data-theme="dark"] .project-window i {
+  background: #999;
+}
+html[data-theme="dark"] .project-window strong,
+html[data-theme="dark"] .goal-card > b {
+  -webkit-text-stroke-color: rgba(255, 255, 255, 0.28);
+}
+html[data-theme="dark"] .orbit {
+  color: #111;
+  background: #eee;
+  border-color: #eee;
+  box-shadow: none;
+}
+html[data-theme="dark"] .avatar {
+  background: radial-gradient(circle at 35% 30%, #333, #090909);
+  box-shadow: 0 24px 70px rgba(255, 255, 255, 0.06);
+}
+html[data-theme="dark"] .portrait::before {
+  border-color: rgba(255, 255, 255, 0.2);
+}
+html[data-theme="dark"] .project-visual {
+  background:
+    radial-gradient(
+      circle at 60% 40%,
+      rgba(255, 255, 255, 0.08),
+      transparent 40%
+    ),
+    linear-gradient(145deg, #171717, #060606);
+}
+html[data-theme="dark"] .project-card::before {
+  background: radial-gradient(
+    500px circle at var(--mx) var(--my),
+    rgba(255, 255, 255, 0.05),
+    transparent 42%
+  );
+}
+html[data-theme="dark"] .skill-group button {
+  color: #bbb;
+  background: rgba(255, 255, 255, 0.055);
+  border-color: rgba(255, 255, 255, 0.14);
+}
+html[data-theme="dark"] .skill-group button:hover {
+  color: #111;
+  background: #eee;
+  box-shadow: none;
+}
+html[data-theme="dark"] .page-transition {
+  background: radial-gradient(
+    circle at var(--cursor-x, 50vw) var(--cursor-y, 50vh),
+    #555,
+    #050505 52%
+  );
+}
+html[data-theme="dark"] .contact-orb {
+  background: radial-gradient(
+    circle,
+    rgba(255, 255, 255, 0.07),
+    transparent 65%
+  );
+}
+html[data-theme="dark"] img[src*="placeholder"] {
+  filter: invert(1) grayscale(1);
+}
+
+/* Keep every dark-theme surface neutral, including animated and hover states. */
+html[data-theme="dark"] .ambient,
+html[data-theme="dark"] .contact-orb {
+  background: radial-gradient(
+    circle,
+    rgba(255, 255, 255, 0.07),
+    transparent 66%
+  );
+}
+html[data-theme="dark"] .project-window {
+  background: rgba(8, 8, 8, 0.82);
+  border-color: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 35px 80px #000;
+}
+html[data-theme="dark"] .project-content p,
+html[data-theme="dark"] .project-actions a,
+html[data-theme="dark"] .tags span,
+html[data-theme="dark"] .nav nav a,
+html[data-theme="dark"] .scroll-progress span,
+html[data-theme="dark"] .hero-subtitle,
+html[data-theme="dark"] .education p {
+  color: #aaa;
+}
+html[data-theme="dark"] .skill-core {
+  border-color: rgba(255, 255, 255, 0.28);
+  background: radial-gradient(
+    circle,
+    rgba(255, 255, 255, 0.08),
+    transparent 70%
+  );
+  box-shadow: 0 0 70px rgba(255, 255, 255, 0.06);
+}
+html[data-theme="dark"] .section-number {
+  -webkit-text-stroke-color: rgba(255, 255, 255, 0.07);
+}
+html[data-theme="dark"] .email {
+  border-bottom-color: rgba(255, 255, 255, 0.42);
+}
+html[data-theme="dark"] .project-card,
+html[data-theme="dark"] .goal-card,
+html[data-theme="dark"] .education {
+  border-color: rgba(255, 255, 255, 0.16);
+}
+html[data-theme="dark"] .project-card:hover,
+html[data-theme="dark"] .goal-card:hover {
+  border-color: rgba(255, 255, 255, 0.32);
+}
+
+@media (max-width: 560px) {
+  .scroll-cue {
+    display: none;
+  }
 }
