@@ -28,10 +28,6 @@ export default function ProjectCard({
     >
       <div className="project-visual">
         <span>0{index + 1}</span>
-        <img
-          src="/images/projects/project-placeholder.svg"
-          alt={`${project.name} project preview placeholder`}
-        />
         <div className="project-window">
           <i />
           <i />
