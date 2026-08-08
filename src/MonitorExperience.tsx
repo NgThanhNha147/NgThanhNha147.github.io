@@ -12,23 +12,33 @@ import * as THREE from "three";
 function ScreenPreview() {
   return (
     <div className="monitor-preview">
-      <div className="monitor-preview-nav">
-        <b>TN.</b>
-        <span>
-          HOME&nbsp;&nbsp;&nbsp; ABOUT&nbsp;&nbsp;&nbsp;
-          PROJECTS&nbsp;&nbsp;&nbsp; CONTACT
-        </span>
+      <div className="monitor-preview-identity">
+        <strong>WORK</strong>
+        <strong>WITH</strong>
+        <strong>TNKAX</strong>
+        <small>
+          FULL STACK DEVELOPER&nbsp;&nbsp; / &nbsp;&nbsp;SYSTEM READY
+        </small>
       </div>
-      <div className="monitor-preview-copy">
-        <small>HEY, I'M THANH NHA.</small>
-        <strong>I build full-stack web applications.</strong>
-        <p>
-          A Full-stack Developer based in Hanoi, building practical products
-          from interface to database.
-        </p>
-        <div>
-          <b>VIEW PROJECTS</b>
-          <span>DOWNLOAD CV</span>
+      <div className="monitor-preview-site">
+        <div className="monitor-preview-nav">
+          <b>TN.</b>
+          <span>
+            HOME&nbsp;&nbsp;&nbsp; ABOUT&nbsp;&nbsp;&nbsp;
+            PROJECTS&nbsp;&nbsp;&nbsp; CONTACT
+          </span>
+        </div>
+        <div className="monitor-preview-copy">
+          <small>HEY, I'M THANH NHA.</small>
+          <strong>I build full-stack web applications.</strong>
+          <p>
+            A Full-stack Developer based in Hanoi, building practical products
+            from interface to database.
+          </p>
+          <div>
+            <b>VIEW PROJECTS</b>
+            <span>DOWNLOAD CV</span>
+          </div>
         </div>
       </div>
     </div>
@@ -134,7 +144,7 @@ function Scene({ progress }: { progress: RefObject<number> }) {
         <Html
           transform
           position={[0, 0, 0.15]}
-          distanceFactor={3.55}
+          distanceFactor={2.03}
           style={{ pointerEvents: "none" }}
         >
           <ScreenPreview />
@@ -254,7 +264,10 @@ export default function MonitorExperience({
     const update = () => {
       if (!root.current) return;
       const rect = root.current.getBoundingClientRect();
-      root.current.classList.toggle("is-past", rect.bottom <= 0);
+      root.current.classList.toggle(
+        "is-past",
+        rect.bottom <= innerHeight * 0.5,
+      );
       const distance = Math.max(1, root.current.offsetHeight - innerHeight);
       const next = THREE.MathUtils.clamp(-rect.top / distance, 0, 1);
       const shouldRenderScene = next < 0.995 && rect.bottom > 0;
@@ -285,6 +298,14 @@ export default function MonitorExperience({
         "--monitor-hint-opacity",
         String(1 - THREE.MathUtils.clamp(next / 0.2, 0, 1)),
       );
+      document.documentElement.style.setProperty(
+        "--monitor-title-opacity",
+        String(1 - THREE.MathUtils.clamp((next - 0.04) / 0.1, 0, 1)),
+      );
+      document.documentElement.style.setProperty(
+        "--monitor-preview-opacity",
+        String(THREE.MathUtils.clamp((next - 0.16) / 0.14, 0, 1)),
+      );
     };
     update();
     addEventListener("scroll", update, { passive: true });
@@ -295,6 +316,10 @@ export default function MonitorExperience({
       document.documentElement.style.removeProperty("--monitor-scene-opacity");
       document.documentElement.style.removeProperty("--monitor-nav-opacity");
       document.documentElement.style.removeProperty("--monitor-hint-opacity");
+      document.documentElement.style.removeProperty("--monitor-title-opacity");
+      document.documentElement.style.removeProperty(
+        "--monitor-preview-opacity",
+      );
       removeEventListener("scroll", update);
       removeEventListener("resize", update);
     };

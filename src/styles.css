@@ -536,16 +536,50 @@ main {
 }
 .monitor-preview {
   position: relative;
-  width: 800px;
-  height: 405px;
+  width: 1400px;
+  height: 709px;
   overflow: hidden;
   color: #111;
   background:
     linear-gradient(rgba(0, 0, 0, 0.025) 1px, transparent 1px),
     linear-gradient(90deg, rgba(0, 0, 0, 0.025) 1px, transparent 1px), #fafaf8;
-  background-size: 40px 40px;
+  background-size: 70px 70px;
   font-family: Manrope, sans-serif;
   box-shadow: inset 0 0 45px rgba(0, 0, 0, 0.035);
+}
+.monitor-preview-site {
+  position: absolute;
+  inset: 0 auto auto 0;
+  width: 800px;
+  height: 405px;
+  opacity: var(--monitor-preview-opacity, 0);
+  transform: scale(1.75);
+  transform-origin: top left;
+  transition: opacity 0.08s linear;
+}
+.monitor-preview-identity {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #111;
+  opacity: var(--monitor-title-opacity, 1);
+  transform: scale(calc(0.92 + var(--monitor-progress, 0) * 0.08));
+  transition: opacity 0.08s linear;
+}
+.monitor-preview-identity strong {
+  font:
+    300 108px/0.82 MuseoModerno,
+    sans-serif;
+  letter-spacing: -0.075em;
+}
+.monitor-preview-identity small {
+  margin-top: 42px;
+  color: #555;
+  font: 500 12px DM Mono;
+  letter-spacing: 0.26em;
 }
 .monitor-preview-nav {
   position: absolute;
@@ -676,10 +710,6 @@ html[data-theme="dark"] .monitor-canvas {
   }
   .timeline-rail {
     top: 175vh;
-  }
-  .monitor-preview {
-    width: 650px;
-    height: 405px;
   }
 }
 @media (prefers-reduced-motion: reduce) {
