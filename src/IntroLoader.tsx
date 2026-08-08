@@ -175,8 +175,8 @@ export default function IntroLoader({
         .to(
           ".intro-name",
           {
-            color: "#f4ffff",
-            textShadow: "0 0 34px rgba(67,241,221,.28)",
+            color: "#ffffff",
+            textShadow: "0 0 30px rgba(255,255,255,.2)",
             duration: 0.24,
           },
           3.08,

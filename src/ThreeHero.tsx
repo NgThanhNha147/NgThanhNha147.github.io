@@ -42,8 +42,8 @@ function DeveloperCore() {
         <mesh>
           <icosahedronGeometry args={[1.35, 5]} />
           <MeshDistortMaterial
-            color="#041f35"
-            emissive="#00bcd4"
+            color="#161616"
+            emissive="#9a9a9a"
             emissiveIntensity={0.65}
             roughness={0.18}
             metalness={0.82}
@@ -55,7 +55,7 @@ function DeveloperCore() {
         <mesh scale={0.76}>
           <icosahedronGeometry args={[1.35, 2]} />
           <meshPhysicalMaterial
-            color="#0af0d0"
+            color="#e6e6e2"
             transparent
             opacity={0.1}
             transmission={0.7}
@@ -66,7 +66,7 @@ function DeveloperCore() {
       <Points positions={particles} stride={3}>
         <PointMaterial
           transparent
-          color="#5df8e5"
+          color="#f4f4f0"
           size={0.018}
           sizeAttenuation
           depthWrite={false}
@@ -89,7 +89,7 @@ export default function ThreeHero() {
         }}
       >
         <ambientLight intensity={0.35} />
-        <pointLight color="#00d9ff" position={[2, 2, 3]} intensity={18} />
+        <pointLight color="#ffffff" position={[2, 2, 3]} intensity={14} />
         <DeveloperCore />
       </Canvas>
     </div>
